@@ -5,13 +5,17 @@
 package gsbperso;
 
 import com.mysql.jdbc.Connection;
+import java.sql.Array;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -51,6 +55,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jMenuAction.setVisible(false);
         this.jPanelInfoPerso.setVisible(false);
         this.jPanelFormation.setVisible(false);
+        this.jPanelModif.setVisible(false);
+        this.jPanelPromouv.setVisible(false);
 
     }
 
@@ -74,7 +80,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jTextFieldAdresse = new javax.swing.JTextField();
         jTextFieldTelPerso = new javax.swing.JTextField();
         jTextFieldTelPro = new javax.swing.JTextField();
-        jTextFieldEmail = new javax.swing.JTextField();
         jTextFieldSite = new javax.swing.JTextField();
         labelduSalaire = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -91,6 +96,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         labelTelPro = new javax.swing.JLabel();
         jButtonRetour = new javax.swing.JButton();
         jLabelPosition = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListmail = new javax.swing.JList<>();
+        jButtonAjoutEmail = new javax.swing.JButton();
+        jTextFieldAjoutEmail = new javax.swing.JTextField();
+        jButtonSuppEmail = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanelFormation = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,6 +112,17 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jButtonSupprimer = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
         jLabelPermis = new javax.swing.JLabel();
+        jButtonPermis = new javax.swing.JButton();
+        jPanelModif = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablePosition = new javax.swing.JTable();
+        jButtonRet = new javax.swing.JButton();
+        jPanelPromouv = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTablePromouv = new javax.swing.JTable();
+        jButReturn = new javax.swing.JButton();
         nomMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         connexionMenuItem = new javax.swing.JMenuItem();
@@ -116,7 +137,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuModif = new javax.swing.JMenuItem();
         jMenuCreer = new javax.swing.JMenuItem();
         jMenuPromouvoir = new javax.swing.JMenuItem();
-        jMenuRetrograder = new javax.swing.JMenuItem();
         aideMenu = new javax.swing.JMenu();
         aproposMenuItem = new javax.swing.JMenuItem();
         nomjMenu = new javax.swing.JMenu();
@@ -207,14 +227,65 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         jLabelPosition.setForeground(new java.awt.Color(204, 204, 204));
 
+        jListmail.setModel(new DefaultListModel());
+        jScrollPane3.setViewportView(jListmail);
+
+        jButtonAjoutEmail.setText("Ajouter");
+        jButtonAjoutEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutEmailActionPerformed(evt);
+            }
+        });
+
+        jButtonSuppEmail.setText("Supprimer");
+        jButtonSuppEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSuppEmailActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanelInfoPersoLayout = new org.jdesktop.layout.GroupLayout(jPanelInfoPerso);
         jPanelInfoPerso.setLayout(jPanelInfoPersoLayout);
         jPanelInfoPersoLayout.setHorizontalGroup(
             jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelInfoPersoLayout.createSequentialGroup()
+                .add(0, 206, Short.MAX_VALUE)
+                .add(jLabel1)
+                .add(199, 199, 199))
             .add(jPanelInfoPersoLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanelInfoPersoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 208, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanelInfoPersoLayout.createSequentialGroup()
+                        .add(318, 318, 318)
+                        .add(jButtonAjoutEmail)
+                        .add(58, 58, 58)
+                        .add(jButtonSuppEmail)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelInfoPersoLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanelInfoPersoLayout.createSequentialGroup()
+                        .add(106, 106, 106)
+                        .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(labelSalaire)
+                            .add(labelPosition))
+                        .add(28, 28, 28)
+                        .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(labelduSalaire, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jLabelPosition, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .add(jPanelInfoPersoLayout.createSequentialGroup()
+                        .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanelInfoPersoLayout.createSequentialGroup()
+                                .add(jButtonValider)
+                                .add(51, 51, 51)
+                                .add(jButtonAnnuler))
+                            .add(jPanelInfoPersoLayout.createSequentialGroup()
+                                .add(64, 64, 64)
+                                .add(jButtonRetour)))
+                        .add(160, 160, 160))
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanelInfoPersoLayout.createSequentialGroup()
                         .add(67, 67, 67)
                         .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(labelPrenom)
@@ -233,46 +304,23 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, jTextFieldCP)
                             .add(jTextFieldVille)
                             .add(jTextFieldNom)))
-                    .add(jPanelInfoPersoLayout.createSequentialGroup()
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanelInfoPersoLayout.createSequentialGroup()
                         .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                                 .add(labelTelPro)
-                                .add(labelMail)
-                                .add(labelWeb)
-                                .add(labelSalaire)
-                                .add(labelPosition))
+                                .add(labelMail))
                             .add(jPanelInfoPersoLayout.createSequentialGroup()
                                 .add(20, 20, 20)
-                                .add(labelTelPerso)))
+                                .add(labelTelPerso))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, labelWeb))
                         .add(28, 28, 28)
                         .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jTextFieldSite)
+                            .add(jScrollPane3)
                             .add(jTextFieldTelPerso)
                             .add(jTextFieldTelPro)
-                            .add(jTextFieldEmail)
-                            .add(jTextFieldSite)
-                            .add(jLabelPosition, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jPanelInfoPersoLayout.createSequentialGroup()
-                                .add(labelduSalaire, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 188, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(0, 0, Short.MAX_VALUE)))))
+                            .add(jTextFieldAjoutEmail))))
                 .add(146, 146, 146))
-            .add(jPanelInfoPersoLayout.createSequentialGroup()
-                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanelInfoPersoLayout.createSequentialGroup()
-                        .add(220, 220, 220)
-                        .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 334, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanelInfoPersoLayout.createSequentialGroup()
-                        .add(249, 249, 249)
-                        .add(jButtonValider)
-                        .add(51, 51, 51)
-                        .add(jButtonAnnuler))
-                    .add(jPanelInfoPersoLayout.createSequentialGroup()
-                        .add(313, 313, 313)
-                        .add(jButtonRetour)))
-                .add(0, 0, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelInfoPersoLayout.createSequentialGroup()
-                .add(0, 206, Short.MAX_VALUE)
-                .add(jLabel1)
-                .add(199, 199, 199))
         );
         jPanelInfoPersoLayout.setVerticalGroup(
             jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -307,49 +355,77 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jTextFieldTelPro, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(labelTelPro))
+                .add(21, 21, 21)
+                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(labelMail)
+                    .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 48, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(18, 18, 18)
+                .add(jTextFieldAjoutEmail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButtonAjoutEmail)
+                    .add(jButtonSuppEmail))
                 .add(18, 18, 18)
                 .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jTextFieldEmail, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(labelMail))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextFieldSite, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(labelWeb))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(labelWeb)
-                    .add(jTextFieldSite, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
-                .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(labelSalaire)
-                    .add(labelduSalaire))
+                    .add(labelduSalaire)
+                    .add(labelSalaire))
                 .add(18, 18, 18)
                 .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(labelPosition)
                     .add(jLabelPosition, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(36, 36, 36)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanelInfoPersoLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButtonValider)
                     .add(jButtonAnnuler))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButtonRetour)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .add(66, 66, 66))
         );
 
         desktopPane.add(jPanelInfoPerso);
-        jPanelInfoPerso.setBounds(0, 0, 770, 770);
+        jPanelInfoPerso.setBounds(0, 0, 770, 810);
 
         jPanelFormation.setBackground(new java.awt.Color(204, 204, 204));
 
+        jListeForm.setModel(new DefaultListModel());
         jScrollPane1.setViewportView(jListeForm);
 
         jLabel5.setFont(new java.awt.Font("Sitka Text", 3, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
         jLabel5.setText("Formations, Stages, Langues, Permis, Hobbies");
 
-        jComboBoxInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Formations", "Stages", "Langues", "Hobbies" }));
+        jComboBoxInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Formations", "Stages", "Langues", "Hobbies", "Expérience" }));
+        jComboBoxInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxInfoActionPerformed(evt);
+            }
+        });
+
+        jTextFieldAjout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldAjoutActionPerformed(evt);
+            }
+        });
 
         jButtonAjout.setText("Ajouter");
+        jButtonAjout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjoutActionPerformed(evt);
+            }
+        });
 
         jButtonSupprimer.setText("Supprimer");
+        jButtonSupprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSupprimerActionPerformed(evt);
+            }
+        });
 
         jButtonReturn.setText("Retour");
         jButtonReturn.addActionListener(new java.awt.event.ActionListener() {
@@ -362,6 +438,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jLabelPermis.setForeground(new java.awt.Color(153, 153, 153));
         jLabelPermis.setText("Permis");
 
+        jButtonPermis.setText("Changer le statut du Permis");
+        jButtonPermis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPermisActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanelFormationLayout = new org.jdesktop.layout.GroupLayout(jPanelFormation);
         jPanelFormation.setLayout(jPanelFormationLayout);
         jPanelFormationLayout.setHorizontalGroup(
@@ -373,10 +456,17 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                         .add(jLabel5))
                     .add(jPanelFormationLayout.createSequentialGroup()
                         .add(359, 359, 359)
-                        .add(jButtonAjout, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(34, 34, 34)
-                        .add(jButtonSupprimer)))
+                        .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jButtonPermis)
+                            .add(jPanelFormationLayout.createSequentialGroup()
+                                .add(jButtonAjout, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(43, 43, 43)
+                                .add(jButtonSupprimer)))))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
+                .add(0, 0, Short.MAX_VALUE)
+                .add(jButtonReturn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(262, 262, 262))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
                 .addContainerGap(71, Short.MAX_VALUE)
                 .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -388,12 +478,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                             .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE))
                         .add(65, 65, 65))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
-                        .add(jLabelPermis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 450, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(249, 249, 249))))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
-                .add(jButtonReturn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(262, 262, 262))
+                        .add(jLabelPermis, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 224, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(475, 475, 475))))
         );
         jPanelFormationLayout.setVerticalGroup(
             jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -405,7 +491,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                         .add(71, 71, 71)
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 172, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanelFormationLayout.createSequentialGroup()
-                        .add(135, 135, 135)
+                        .add(155, 155, 155)
                         .add(jComboBoxInfo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .add(59, 59, 59)
                 .add(jTextFieldAjout, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -413,15 +499,159 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButtonAjout, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jButtonSupprimer, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(18, 18, 18)
                 .add(jButtonReturn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 81, Short.MAX_VALUE)
-                .add(jLabelPermis)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 75, Short.MAX_VALUE)
+                .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabelPermis)
+                    .add(jButtonPermis))
                 .add(129, 129, 129))
         );
 
         desktopPane.add(jPanelFormation);
         jPanelFormation.setBounds(0, 0, 770, 760);
+
+        jLabel6.setFont(new java.awt.Font("Sylfaen", 3, 24)); // NOI18N
+        jLabel6.setText("Modifier la position d'un employé");
+
+        jTablePosition.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Nom", "Prenom", "Position"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTablePosition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePositionMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTablePosition);
+        if (jTablePosition.getColumnModel().getColumnCount() > 0) {
+            jTablePosition.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jButtonRet.setText("Retour");
+        jButtonRet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRetActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPanelModifLayout = new org.jdesktop.layout.GroupLayout(jPanelModif);
+        jPanelModif.setLayout(jPanelModifLayout);
+        jPanelModifLayout.setHorizontalGroup(
+            jPanelModifLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelModifLayout.createSequentialGroup()
+                .addContainerGap(117, Short.MAX_VALUE)
+                .add(jPanelModifLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelModifLayout.createSequentialGroup()
+                        .add(jLabel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 382, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(122, 122, 122))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelModifLayout.createSequentialGroup()
+                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 524, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(38, 38, 38))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelModifLayout.createSequentialGroup()
+                        .add(jButtonRet)
+                        .add(276, 276, 276))))
+        );
+        jPanelModifLayout.setVerticalGroup(
+            jPanelModifLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelModifLayout.createSequentialGroup()
+                .addContainerGap()
+                .add(jLabel6)
+                .add(36, 36, 36)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 476, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 45, Short.MAX_VALUE)
+                .add(jButtonRet)
+                .add(41, 41, 41))
+        );
+
+        desktopPane.add(jPanelModif);
+        jPanelModif.setBounds(0, 0, 679, 669);
+
+        jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
+        jLabel7.setText("Promouvoir ou Retrograder un Employé");
+
+        jTablePromouv.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Nom", "Prenom", "Position"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTablePromouv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePromouvMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jTablePromouv);
+        if (jTablePromouv.getColumnModel().getColumnCount() > 0) {
+            jTablePromouv.getColumnModel().getColumn(0).setResizable(false);
+            jTablePromouv.getColumnModel().getColumn(1).setResizable(false);
+            jTablePromouv.getColumnModel().getColumn(2).setResizable(false);
+            jTablePromouv.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jButReturn.setText("Retour");
+
+        org.jdesktop.layout.GroupLayout jPanelPromouvLayout = new org.jdesktop.layout.GroupLayout(jPanelPromouv);
+        jPanelPromouv.setLayout(jPanelPromouvLayout);
+        jPanelPromouvLayout.setHorizontalGroup(
+            jPanelPromouvLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelPromouvLayout.createSequentialGroup()
+                .add(329, 329, 329)
+                .add(jButReturn)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPromouvLayout.createSequentialGroup()
+                .addContainerGap(171, Short.MAX_VALUE)
+                .add(jPanelPromouvLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPromouvLayout.createSequentialGroup()
+                        .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(147, 147, 147))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelPromouvLayout.createSequentialGroup()
+                        .add(jLabel7)
+                        .add(178, 178, 178))))
+        );
+        jPanelPromouvLayout.setVerticalGroup(
+            jPanelPromouvLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelPromouvLayout.createSequentialGroup()
+                .add(38, 38, 38)
+                .add(jLabel7)
+                .add(39, 39, 39)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(65, 65, 65)
+                .add(jButReturn)
+                .addContainerGap(179, Short.MAX_VALUE))
+        );
+
+        desktopPane.add(jPanelPromouv);
+        jPanelPromouv.setBounds(0, 0, 770, 810);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Personnel");
@@ -488,16 +718,23 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuAction.setText("Actions");
 
         jMenuModif.setText("Modifier la position");
+        jMenuModif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuModifActionPerformed(evt);
+            }
+        });
         jMenuAction.add(jMenuModif);
 
         jMenuCreer.setText("Créer un Employé");
         jMenuAction.add(jMenuCreer);
 
-        jMenuPromouvoir.setText("Promouvoir un Employé");
+        jMenuPromouvoir.setText("Promouvoir/Retrograder un Employé");
+        jMenuPromouvoir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPromouvoirActionPerformed(evt);
+            }
+        });
         jMenuAction.add(jMenuPromouvoir);
-
-        jMenuRetrograder.setText("Rétrograder un Employé");
-        jMenuAction.add(jMenuRetrograder);
 
         nomMenuBar.add(jMenuAction);
 
@@ -527,7 +764,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(desktopPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE)
+            .add(desktopPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
         );
 
         pack();
@@ -564,6 +801,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelInfoPerso.setVisible(true);
         this.jPanelFormation.setVisible(false);
         this.jPanelInfoPerso.setOpaque(false);
+        this.jPanelModif.setVisible(false);
         this.jTextFieldNom.setText(this.personne.getNom());
         this.jTextFieldPrenom.setText(this.personne.getPrenom());
         this.jTextFieldAdresse.setText(this.personne.getAdresse_rue());
@@ -571,10 +809,27 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jTextFieldVille.setText(this.personne.getAdresse_ville());
         this.jTextFieldTelPerso.setText(this.personne.getTelPerso());
         this.jTextFieldTelPro.setText(this.personne.getTelPro());
-        this.jTextFieldEmail.setText(this.personne.getMail());
         this.jLabelPosition.setText(this.personne.getPosition());
         this.jTextFieldSite.setText(this.personne.getSite());
         this.labelduSalaire.setText(this.personne.getSalaire() + " euros");
+        try {
+            ResultSet lignesRetournees = Singleton.requeteSelection("select libelle_email from cv_email where id_utilisateur = " + personne.getId());
+            if (lignesRetournees.next()) {
+                DefaultListModel Select = (DefaultListModel) jListmail.getModel();
+                Select.clear();
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString("libelle_email"));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuInfoPersoActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
@@ -585,7 +840,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jTextFieldVille.setText(this.personne.getAdresse_ville());
         this.jTextFieldTelPerso.setText(this.personne.getTelPerso());
         this.jTextFieldTelPro.setText(this.personne.getTelPro());
-        this.jTextFieldEmail.setText(this.personne.getMail());
         this.jLabelPosition.setText(this.personne.getPosition());
         this.jTextFieldSite.setText(this.personne.getSite());
         this.labelduSalaire.setText(this.personne.getSalaire() + " euros");
@@ -596,37 +850,391 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connexionUrl = "jdbc:mysql://localhost:3333/gsbperso?user=gsbperso&password=ppe3";
-            Connection maConnexion = (Connection) DriverManager.getConnection(connexionUrl);
-            Statement requete = maConnexion.createStatement();
-            boolean lignesRetournees = requete.execute("update utilisateurs set nom='" + this.jTextFieldNom.getText() + "', prenom='" + this.jTextFieldPrenom.getText() + "', adresse_rue='" + this.jTextFieldAdresse.getText() + "', adresse_cp='" + this.jTextFieldCP.getText() + "', adresse_ville='" + this.jTextFieldVille.getText() + "', tel_personnel='" + this.jTextFieldTelPerso.getText() + "', tel_professionnel='" + this.jTextFieldTelPro.getText() + "', mail ='" + this.jTextFieldEmail.getText() + "', site_web='" + this.jTextFieldSite.getText() + "' where id_utilisateur = " + this.personne.getId());
-            this.personne.setNom(this.jTextFieldNom.getText());
-            this.personne.setPrenom(this.jTextFieldPrenom.getText());
-            this.personne.setAdresse_rue(this.jTextFieldAdresse.getText());
-            this.personne.setAdresse_CP(this.jTextFieldCP.getText());
-            this.personne.setAdresse_ville(this.jTextFieldVille.getText());
-            this.personne.setTelPerso(this.jTextFieldTelPerso.getText());
-            this.personne.setTelPro(this.jTextFieldTelPro.getText());
-            this.personne.setMail(this.jTextFieldEmail.getText());
-            this.personne.setSite(this.jTextFieldSite.getText());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Singleton.requeteAction("update utilisateurs set nom='" + this.jTextFieldNom.getText() + "', prenom='" + this.jTextFieldPrenom.getText() + "', adresse_rue='" + this.jTextFieldAdresse.getText() + "', adresse_cp='" + this.jTextFieldCP.getText() + "', adresse_ville='" + this.jTextFieldVille.getText() + "', tel_personnel='" + this.jTextFieldTelPerso.getText() + "', tel_professionnel='" + this.jTextFieldTelPro.getText() + "', site_web='" + this.jTextFieldSite.getText() + "' where id_utilisateur = " + this.personne.getId());
+        this.personne.setNom(this.jTextFieldNom.getText());
+        this.personne.setPrenom(this.jTextFieldPrenom.getText());
+        this.personne.setAdresse_rue(this.jTextFieldAdresse.getText());
+        this.personne.setAdresse_CP(this.jTextFieldCP.getText());
+        this.personne.setAdresse_ville(this.jTextFieldVille.getText());
+        this.personne.setTelPerso(this.jTextFieldTelPerso.getText());
+        this.personne.setTelPro(this.jTextFieldTelPro.getText());
+        this.personne.setSite(this.jTextFieldSite.getText());
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jMenuFormationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFormationsActionPerformed
-       this.jPanelFormation.setVisible(true);
-       this.jPanelInfoPerso.setVisible(false);
-       this.jPanelFormation.setOpaque(false);
+        this.jPanelFormation.setVisible(true);
+        this.jPanelInfoPerso.setVisible(false);
+        this.jPanelModif.setVisible(false);
+        this.jPanelFormation.setOpaque(false);        
+        try {
+            ResultSet lignesRetournees = Singleton.requeteSelection("select libelle_formation from cv_formation where id_utilisateur = " + personne.getId());
+            if (lignesRetournees.next()) {
+                DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+                Select.clear();
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString("libelle_formation"));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (this.personne.getPermis() == 1) {
+            jLabelPermis.setText("Titulaire du Permis B");
+        } else {
+            jLabelPermis.setText("Non Titulaire du Permis B");
+        }
     }//GEN-LAST:event_jMenuFormationsActionPerformed
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
-        this.jPanelInfoPerso.setVisible(false);
+        this.jPanelFormation.setVisible(false);
+        DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+        Select.clear();
     }//GEN-LAST:event_jButtonReturnActionPerformed
+
+    private void jComboBoxInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxInfoActionPerformed
+        DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+        Select.clear();
+        try {
+            String tuple = "";
+            String libelle = "";
+            int choix = jComboBoxInfo.getSelectedIndex();
+            switch (choix) {
+                case 0:
+                    tuple = "cv_formation";
+                    libelle = "libelle_formation";
+                    break;
+                case 1:
+                    tuple = "cv_stages";
+                    libelle = "libelle_stage";
+                    break;
+                case 2:
+                    tuple = "cv_langue";
+                    libelle = "libelle_langue";
+                    break;
+                case 3:
+                    tuple = "cv_centre_interet";
+                    libelle = "libelle_centre_interet";
+                    break;
+                case 4:
+                    tuple = "cv_experience_prof";
+                    libelle = "libelle_experience_prof";
+                    break;
+                default:
+                    break;
+            }
+            ResultSet lignesRetournees = Singleton.requeteSelection("select " + libelle + " from " + tuple + " where id_utilisateur = " + personne.getId());
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString(libelle));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jComboBoxInfoActionPerformed
+
+    private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
+        String texte = jListeForm.getSelectedValue();
+        DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+        Select.clear();
+        try {
+            String tuple = "";
+            String libelle = "";
+            int choix = jComboBoxInfo.getSelectedIndex();
+            switch (choix) {
+                case 0:
+                    tuple = "cv_formation";
+                    libelle = "libelle_formation";
+                    break;
+                case 1:
+                    tuple = "cv_stages";
+                    libelle = "libelle_stage";
+                    break;
+                case 2:
+                    tuple = "cv_langue";
+                    libelle = "libelle_langue";
+                    break;
+                case 3:
+                    tuple = "cv_centre_interet";
+                    libelle = "libelle_centre_interet";
+                    break;
+                case 4:
+                    tuple = "cv_experience_prof";
+                    libelle = "libelle_experience_prof";
+                    break;
+                default:
+                    break;
+            }
+            Singleton.requeteAction("delete from " + tuple + " where id_utilisateur = " + this.personne.getId() + " and " + libelle + " = '" + texte + "'");
+            ResultSet lignesRetournees = Singleton.requeteSelection("select " + libelle + " from " + tuple + " where id_utilisateur = " + this.personne.getId());
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString(libelle));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSupprimerActionPerformed
+
+    private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
+        String ajout = this.jTextFieldAjout.getText();
+        DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+        Select.clear();
+        try {
+            String tuple = "";
+            String libelle = "";
+            int choix = jComboBoxInfo.getSelectedIndex();
+            switch (choix) {
+                case 0:
+                    tuple = "cv_formation";
+                    libelle = "libelle_formation";
+                    break;
+                case 1:
+                    tuple = "cv_stages";
+                    libelle = "libelle_stage";
+                    break;
+                case 2:
+                    tuple = "cv_langue";
+                    libelle = "libelle_langue";
+                    break;
+                case 3:
+                    tuple = "cv_centre_interet";
+                    libelle = "libelle_centre_interet";
+                    break;
+                case 4:
+                    tuple = "cv_experience_prof";
+                    libelle = "libelle_experience_prof";
+                    break;
+                default:
+                    break;
+            }
+            Singleton.requeteAction("insert into " + tuple + " (id_utilisateur," + libelle + ") VALUES(" + personne.getId() + ",'" + ajout + "');");
+            ResultSet lignesRetournees = Singleton.requeteSelection("select " + libelle + " from " + tuple + " where id_utilisateur = " + personne.getId());
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString(libelle));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.jTextFieldAjout.setText("");
+    }//GEN-LAST:event_jButtonAjoutActionPerformed
+
+    private void jTextFieldAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAjoutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldAjoutActionPerformed
+
+    private void jButtonPermisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPermisActionPerformed
+        int permis;
+        if (this.personne.getPermis() == 0) {
+            permis = 1;
+            this.personne.setPermis(1);
+        } else {
+            permis = 0;
+            this.personne.setPermis(0);
+        }
+        Singleton.requeteAction("update utilisateurs set permis = " + permis + " where id_utilisateur = " + this.personne.getId());
+        if (this.personne.getPermis() == 1) {
+            jLabelPermis.setText("Titulaire du Permis B");
+        } else {
+            jLabelPermis.setText("Non Titulaire du Permis B");
+        }
+    }//GEN-LAST:event_jButtonPermisActionPerformed
+
+    private void jMenuModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModifActionPerformed
+        this.jPanelFormation.setVisible(false);
+        this.jPanelInfoPerso.setVisible(false);
+        this.jPanelModif.setOpaque(false);
+        this.jPanelModif.setVisible(true);
+        String cadre = "";
+        DefaultTableModel leModel = (DefaultTableModel) jTablePosition.getModel();
+        if(leModel.getRowCount() > 0){
+            for(int i = 0; i <= leModel.getRowCount(); i++){
+                if(i>=1){
+                    leModel.removeRow(i-1);
+                }else{
+                    leModel.removeRow(i);
+                }
+            }
+        }
+        try {
+            ResultSet lignesRetournees = Singleton.requeteSelection("select * from utilisateurs where position = 0");
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+
+                for (int i = 1; i <= longueur; i++) {
+                    if (lignesRetournees.getInt("cadre") == 0) {
+                        cadre = "Non Cadre";
+                    } else if (lignesRetournees.getInt("cadre") == 1) {
+                        cadre = "Cadre";
+                    }
+                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"),lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), cadre});
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuModifActionPerformed
+
+    private void jTablePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePositionMouseClicked
+        String positionStr = String.valueOf(jTablePosition.getModel().getValueAt(jTablePosition.getSelectedRow(), 3));
+        System.out.println(positionStr);
+        String id = String.valueOf(jTablePosition.getModel().getValueAt(jTablePosition.getSelectedRow(), 0));
+        System.out.println(id);
+        String changeValue = "";
+        Integer cadre = 0;
+        if(positionStr == "Cadre"){
+            changeValue = "Non Cadre";
+            cadre = 0;
+        }else if(positionStr == "Non Cadre"){
+            changeValue = "Cadre";
+            cadre = 1;
+        }
+        jTablePosition.getModel().setValueAt(changeValue, jTablePosition.getSelectedRow(), 3);
+        Singleton.requeteAction("update utilisateurs set cadre = "+cadre+" where id_utilisateur = "+id);
+    }//GEN-LAST:event_jTablePositionMouseClicked
+
+    private void jButtonRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetActionPerformed
+        this.jPanelModif.setVisible(false);
+    }//GEN-LAST:event_jButtonRetActionPerformed
+
+    private void jButtonAjoutEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutEmailActionPerformed
+        String ajout = this.jTextFieldAjoutEmail.getText();
+        DefaultListModel Select = (DefaultListModel) jListmail.getModel();
+        Select.clear();
+        try {
+            Singleton.requeteAction("insert into cv_email (id_utilisateur, libelle_email) VALUES(" + personne.getId() + ",'" + ajout + "');");
+            ResultSet lignesRetournees = Singleton.requeteSelection("select libelle_email from cv_email where id_utilisateur = " + personne.getId());
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString("libelle_email"));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.jTextFieldAjoutEmail.setText("");
+    }//GEN-LAST:event_jButtonAjoutEmailActionPerformed
+
+    private void jButtonSuppEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppEmailActionPerformed
+        String texte = jListmail.getSelectedValue();
+        DefaultListModel Select = (DefaultListModel) jListmail.getModel();
+        Select.clear();
+        try {
+            Singleton.requeteAction("delete from cv_email where id_utilisateur = " + this.personne.getId() + " and libelle_email = '" + texte + "'");
+            ResultSet lignesRetournees = Singleton.requeteSelection("select libelle_email from cv_email where id_utilisateur = " + this.personne.getId());
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+                for (int i = 1; i <= longueur; i++) {
+                    Select.addElement(lignesRetournees.getString("libelle_email"));
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonSuppEmailActionPerformed
+
+    private void jMenuPromouvoirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPromouvoirActionPerformed
+        this.jPanelFormation.setVisible(false);
+        this.jPanelInfoPerso.setVisible(false);
+        this.jPanelModif.setVisible(false);
+        this.jPanelPromouv.setVisible(true);
+        this.jPanelPromouv.setOpaque(false);
+        String position = "";
+        DefaultTableModel leModel = (DefaultTableModel) jTablePromouv.getModel();
+        if(leModel.getRowCount() > 0){
+            for(int i = 0; i <= leModel.getRowCount(); i++){
+                if(i>=1){
+                    leModel.removeRow(i-1);
+                }else{
+                    leModel.removeRow(i);
+                }
+            }
+        }
+        try {
+            ResultSet lignesRetournees = Singleton.requeteSelection("select * from utilisateurs where position = 0 or position = 1");
+            if (lignesRetournees.next()) {
+                lignesRetournees.last();
+                int longueur = lignesRetournees.getRow();
+                lignesRetournees.first();
+
+                for (int i = 1; i <= longueur; i++) {
+                    if (lignesRetournees.getInt("position") == 0) {
+                        position = "Employé";
+                    } else if (lignesRetournees.getInt("position") == 1) {
+                        position = "Responsable";
+                    }
+                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"),lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), position});
+                    if (i < longueur) {
+                        lignesRetournees.next();
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jMenuPromouvoirActionPerformed
+
+    private void jTablePromouvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePromouvMouseClicked
+        String positionStr = String.valueOf(jTablePromouv.getModel().getValueAt(jTablePromouv.getSelectedRow(), 3));
+        System.out.println(positionStr);
+        String id = String.valueOf(jTablePromouv.getModel().getValueAt(jTablePromouv.getSelectedRow(), 0));
+        System.out.println(id);
+        String changeValue = "";
+        Integer position = 0;
+        if(positionStr == "Responsable"){
+            changeValue = "Employé";
+        }else if(positionStr == "Employé"){
+            changeValue = "Responsable";
+            position = 1;
+        }
+        jTablePromouv.getModel().setValueAt(changeValue, jTablePromouv.getSelectedRow(), 3);
+        Singleton.requeteAction("update utilisateurs set position = "+position+" where id_utilisateur = "+id);
+    }//GEN-LAST:event_jTablePromouvMouseClicked
+
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion
         this.connecte = true;
@@ -639,7 +1247,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         if (laPosition.equals("Responsable")) {
             this.jMenuAction.setVisible(true);
             this.jMenuCreer.setVisible(false);
-            this.jMenuRetrograder.setVisible(false);
             this.jMenuPromouvoir.setVisible(false);
         } else if (laPosition.equals("Directeur")) {
             this.jMenuAction.setVisible(true);
@@ -647,16 +1254,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         }
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            String connexionUrl = "jdbc:mysql://localhost:3333/gsbperso?user=gsbperso&password=ppe3";
-            Connection maConnexion = (Connection) DriverManager.getConnection(connexionUrl);
-            Statement requete = maConnexion.createStatement();
-            ResultSet lignesRetournees = requete.executeQuery("select * from utilisateurs where nom='" + leNom + "'");
+            ResultSet lignesRetournees = Singleton.requeteSelection("select * from utilisateurs where nom='" + leNom + "'");
             if (lignesRetournees.next()) {
-                this.personne = new Personne(lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), lignesRetournees.getString("mail"), lignesRetournees.getString("adresse_rue"), lignesRetournees.getString("adresse_cp"), lignesRetournees.getString("adresse_ville"), lignesRetournees.getFloat("salaire"), lignesRetournees.getString("tel_personnel"), lignesRetournees.getString("tel_professionnel"), lignesRetournees.getString("site_web"), lignesRetournees.getString("position"), lignesRetournees.getInt("permis"));
+                this.personne = new Personne(lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), lignesRetournees.getString("adresse_rue"), lignesRetournees.getString("adresse_cp"), lignesRetournees.getString("adresse_ville"), lignesRetournees.getFloat("salaire"), lignesRetournees.getString("tel_personnel"), lignesRetournees.getString("tel_professionnel"), lignesRetournees.getString("site_web"), laPosition, lignesRetournees.getInt("permis"), lignesRetournees.getInt("cadre"));
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -669,6 +1270,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jMenuCV.setVisible(false);
         this.MenuInformation.setVisible(false);
         this.jMenuAction.setVisible(false);
+        this.jPanelFormation.setVisible(false);
+        this.jPanelInfoPerso.setVisible(false);
+        DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
+        Select.clear();
+        this.jPanelModif.setVisible(false);
     }
 
     public void majConnexion() {
@@ -720,10 +1326,15 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem deconnexionMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton jButReturn;
     private javax.swing.JButton jButtonAjout;
+    private javax.swing.JButton jButtonAjoutEmail;
     private javax.swing.JButton jButtonAnnuler;
+    private javax.swing.JButton jButtonPermis;
+    private javax.swing.JButton jButtonRet;
     private javax.swing.JButton jButtonRetour;
     private javax.swing.JButton jButtonReturn;
+    private javax.swing.JButton jButtonSuppEmail;
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JButton jButtonValider;
     private javax.swing.JComboBox<String> jComboBoxInfo;
@@ -732,9 +1343,12 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelPermis;
     private javax.swing.JLabel jLabelPosition;
     private javax.swing.JList<String> jListeForm;
+    private javax.swing.JList<String> jListmail;
     private javax.swing.JMenu jMenuAction;
     private javax.swing.JMenu jMenuCV;
     private javax.swing.JMenuItem jMenuCreer;
@@ -742,14 +1356,20 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuInfoPerso;
     private javax.swing.JMenuItem jMenuModif;
     private javax.swing.JMenuItem jMenuPromouvoir;
-    private javax.swing.JMenuItem jMenuRetrograder;
     private javax.swing.JPanel jPanelFormation;
     private javax.swing.JPanel jPanelInfoPerso;
+    private javax.swing.JPanel jPanelModif;
+    private javax.swing.JPanel jPanelPromouv;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTablePosition;
+    private javax.swing.JTable jTablePromouv;
     private javax.swing.JTextField jTextFieldAdresse;
     private javax.swing.JTextField jTextFieldAjout;
+    private javax.swing.JTextField jTextFieldAjoutEmail;
     private javax.swing.JTextField jTextFieldCP;
-    private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextFieldPrenom;
     private javax.swing.JTextField jTextFieldSite;
