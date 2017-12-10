@@ -250,7 +250,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                                 .add(jButtonSupprimer)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
-                        .add(357, 357, 357)
                         .add(jButtonReturn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(197, 197, 197))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
@@ -652,9 +651,20 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             }
         });
 
+        jTextFieldAdresse1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldAdresse1ActionPerformed(evt);
+            }
+        });
+
         jTextFieldTelPerso1.setToolTipText("Format Français, sans espace");
 
         jTextFieldTelPro1.setToolTipText("Format Français, sans espace");
+        jTextFieldTelPro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldTelPro1ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
@@ -690,8 +700,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         labelPrenom1.setForeground(new java.awt.Color(153, 153, 153));
         labelPrenom1.setText("Prénom");
 
-        jTextFieldSalaire1.setText(" ");
-
         jRadioButtonYes.setText("Permis A");
         jRadioButtonYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -703,13 +711,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(153, 153, 153));
         jLabel11.setText("Utilisateur");
 
-        jTextFieldUser.setText(" ");
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(153, 153, 153));
         jLabel12.setText("Mot de Passe");
-
-        jTextFieldMDP.setText(" ");
 
         org.jdesktop.layout.GroupLayout jPanelCreationLayout = new org.jdesktop.layout.GroupLayout(jPanelCreation);
         jPanelCreation.setLayout(jPanelCreationLayout);
@@ -1513,41 +1517,44 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jTablePromouvMouseClicked
 
     private void jButtonValiderCreationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderCreationActionPerformed
-        String nom = this.jTextFieldNom1.getText();
-        String prenom = this.jTextFieldPrenom1.getText();
-        String adresse_rue = this.jTextFieldAdresse1.getText();
-        String adresse_cp = this.jTextFieldCP1.getText();
-        String adresse_ville = this.jTextFieldVille1.getText();
-        String tel_perso = this.jTextFieldTelPerso1.getText();
-        String tel_pro = this.jTextFieldTelPro1.getText();
-        Float salaire = Float.valueOf(this.jTextFieldSalaire1.getText());
-        Integer position = 0;
-        String site = this.jTextFieldSite1.getText();
-        String user = this.jTextFieldUser.getText();
-        String mdp = this.jTextFieldMDP.getText();
         try {
+            String nom = this.jTextFieldNom1.getText();
+            String prenom = this.jTextFieldPrenom1.getText();
+            String adresse_rue = this.jTextFieldAdresse1.getText();
+            String adresse_cp = this.jTextFieldCP1.getText();
+            String adresse_ville = this.jTextFieldVille1.getText();
+            String tel_perso = this.jTextFieldTelPerso1.getText();
+            String tel_pro = this.jTextFieldTelPro1.getText();
+            Float salaire = Float.valueOf(this.jTextFieldSalaire1.getText());
+            Integer position = 0;
+            String site = this.jTextFieldSite1.getText();
+            String user = this.jTextFieldUser.getText();
+            String mdp = this.jTextFieldMDP.getText();
             mdp = Outils.md5(mdp);
+            
+            Integer permis = 0;
+            if(this.jRadioButtonYes.isSelected()){
+                permis = 1;
+            }
+            Integer cadre = 0;
+            Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('"+nom+"','"+prenom+"','"+adresse_rue+"','"+adresse_cp+"','"+adresse_ville+"','"+tel_perso+"','"+tel_pro+"',"+salaire+","+position+",'"+site+"','"+user+"','"+mdp+"',"+permis+","+cadre+")");
+            
+            this.jTextFieldNom1.setText("");
+            this.jTextFieldPrenom1.setText("");
+            this.jTextFieldAdresse1.setText("");
+            this.jTextFieldAjoutEmail1.setText("");
+            this.jTextFieldCP1.setText("");
+            this.jTextFieldSite1.setText("");
+            this.jTextFieldTelPerso1.setText("");
+            this.jTextFieldTelPro1.setText("");
+            this.jTextFieldVille1.setText("");
+            this.jTextFieldSalaire1.setText("");
+            this.jTextFieldUser.setText("");
+            this.jTextFieldMDP.setText("");
+            this.jRadioButtonYes.setSelected(false);
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Integer permis = 0;
-        if(this.jRadioButtonYes.isSelected()){
-            permis = 1;
-        }
-        Integer cadre = 0;
-        Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('"+nom+"','"+prenom+"','"+adresse_rue+"','"+adresse_cp+"','"+adresse_ville+"','"+tel_perso+"','"+tel_pro+"',"+salaire+","+position+",'"+site+"','"+user+"','"+mdp+"',"+permis+","+cadre+")");
-        
-        this.jTextFieldNom1.setText("");
-        this.jTextFieldPrenom1.setText("");
-        this.jTextFieldAdresse1.setText("");
-        this.jTextFieldAjoutEmail1.setText("");
-        this.jTextFieldCP1.setText("");
-        this.jTextFieldSite1.setText("");
-        this.jTextFieldTelPerso1.setText("");
-        this.jTextFieldTelPro1.setText("");
-        this.jTextFieldVille1.setText("");
-        this.jTextFieldSalaire1.setText("");
-        this.jRadioButtonYes.setSelected(false);
         
     }//GEN-LAST:event_jButtonValiderCreationActionPerformed
 
@@ -1581,6 +1588,14 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private void jRadioButtonYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonYesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonYesActionPerformed
+
+    private void jTextFieldAdresse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAdresse1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldAdresse1ActionPerformed
+
+    private void jTextFieldTelPro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelPro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTelPro1ActionPerformed
 
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion
@@ -1617,11 +1632,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jMenuCV.setVisible(false);
         this.MenuInformation.setVisible(false);
         this.jMenuAction.setVisible(false);
-        this.jPanelFormation.setVisible(false);
-        this.jPanelInfoPerso.setVisible(false);
         DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
         Select.clear();
+        this.jPanelFormation.setVisible(false);
+        this.jPanelInfoPerso.setVisible(false);
         this.jPanelModif.setVisible(false);
+        this.jPanelCreation.setVisible(false);
+        this.jPanelPromouv.setVisible(false);
     }
 
     public void majConnexion() {

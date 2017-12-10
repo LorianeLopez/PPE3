@@ -219,7 +219,6 @@
                               <EmptySpace pref="103" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="357" max="-2" attributes="0"/>
                               <Component id="jButtonReturn" min="-2" pref="80" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
                           </Group>
@@ -1165,6 +1164,9 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldAdresse1">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAdresse1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldAjoutEmail1">
             </Component>
@@ -1177,6 +1179,9 @@
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value="Format Fran&#xe7;ais, sans espace"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTelPro1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldSite1">
             </Component>
@@ -1280,9 +1285,6 @@
             <Component class="javax.swing.JTextField" name="jTextFieldVille1">
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldSalaire1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value=" "/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButtonYes">
               <Properties>
@@ -1304,9 +1306,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldUser">
-              <Properties>
-                <Property name="text" type="java.lang.String" value=" "/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
@@ -1320,9 +1319,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldMDP">
-              <Properties>
-                <Property name="text" type="java.lang.String" value=" "/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
