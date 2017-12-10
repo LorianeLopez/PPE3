@@ -161,7 +161,6 @@ public class Connexion extends javax.swing.JDialog {
                 //application du cryptage md5 au mdp
                 // ici on appelle md5 membre static de la classe outils
                 mdp=Outils.md5(mdp);
-                System.out.println(mdp);
                 ResultSet lignesRetournees=requete.executeQuery("select * from utilisateurs where identifiant='"+identifiant+"' and mot_de_passe='"+mdp+"'");
                 if (lignesRetournees.next()){
                     String nom=lignesRetournees.getString("nom");
