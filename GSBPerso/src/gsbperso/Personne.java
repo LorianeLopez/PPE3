@@ -9,11 +9,47 @@ package gsbperso;
  * @author nc
  */
 public class Personne {
+    private Integer id;
     private String nom;
     private String prenom;
-    private String courriel;
-    private String date_de_naissance;
-    private String adresse;
+    private String adresse_rue;
+    private String adresse_CP;
+    private String adresse_ville;
+    private Float salaire;
+    private String telPerso;
+    private String telPro;
+    private String site;
+    private String position;
+    private Integer permis;
+    private Integer cadre;
+   
+    public Personne(){
+        
+    }
+    
+    public Personne(Integer id, String nom, String prenom, String adresse_rue, String adresse_CP, String adresse_ville, Float salaire, String telPerso, String telPro, String site, String position, Integer permis, Integer cadre){
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse_rue = adresse_rue;
+        this.adresse_CP = adresse_CP;
+        this.adresse_ville = adresse_ville;
+        this.salaire = salaire;
+        this.telPerso = telPerso;
+        this.telPro = telPro;
+        this.site = site;
+        this.position = position;
+        this.permis = permis;
+        this.cadre = cadre;
+    }
+    
+    public Integer getPermis() {
+        return permis;
+    }
+
+    public void setPermis(Integer permis) {
+        this.permis = permis;
+    }
 
     public String getNom() {
         return nom;
@@ -31,28 +67,86 @@ public class Personne {
         this.prenom = prenom;
     }
 
-    public String getCourriel() {
-        return courriel;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCourriel(String courriel) {
-        this.courriel = courriel;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getDate_de_naissance() {
-        return date_de_naissance;
+    public String getAdresse_rue() {
+        return adresse_rue;
     }
 
-    public void setDate_de_naissance(String date_de_naissance) {
-        this.date_de_naissance = date_de_naissance;
+    public void setAdresse_rue(String adresse_rue) {
+        this.adresse_rue = adresse_rue;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAdresse_CP() {
+        return adresse_CP;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAdresse_CP(String adresse_CP) {
+        this.adresse_CP = adresse_CP;
     }
+
+    public String getAdresse_ville() {
+        return adresse_ville;
+    }
+
+    public void setAdresse_ville(String adresse_ville) {
+        this.adresse_ville = adresse_ville;
+    }
+
+    public Float getSalaire() {
+        return salaire;
+    }
+
+    public void setSalaire(Float salaire) {
+        this.salaire = salaire;
+    }
+
+    public String getTelPerso() {
+        return telPerso;
+    }
+
+    public void setTelPerso(String telPerso) {
+        this.telPerso = telPerso;
+    }
+
+    public String getTelPro() {
+        return telPro;
+    }
+
+    public void setTelPro(String telPro) {
+        this.telPro = telPro;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Integer getCadre() {
+        return cadre;
+    }
+
+    public void setCadre(Integer cadre) {
+        this.cadre = cadre;
+    }
+    
+    
 
 }

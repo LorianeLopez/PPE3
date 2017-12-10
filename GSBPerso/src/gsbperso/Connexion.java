@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -160,14 +161,17 @@ public class Connexion extends javax.swing.JDialog {
                 //application du cryptage md5 au mdp
                 // ici on appelle md5 membre static de la classe outils
                 mdp=Outils.md5(mdp);
-            
+                System.out.println(mdp);
                 ResultSet lignesRetournees=requete.executeQuery("select * from utilisateurs where identifiant='"+identifiant+"' and mot_de_passe='"+mdp+"'");
                 if (lignesRetournees.next()){
                     String nom=lignesRetournees.getString("nom");
-                    //Modifications de la Mission 2 à placer ici
+                    Integer position = lignesRetournees.getInt("position");
+                    ResultSet strPosition =requete.executeQuery("select * from cv_positions where id_position="+position);
+                    if(strPosition.next()){
+                    String laPosition = strPosition.getString("libelle_position");
                     
-                    
-                    this.fenetre.connecte(nom);
+                    this.fenetre.connecte(nom,laPosition);
+                    }
                     this.setVisible(false);
                     this.fenetre.majConnexion();
                     
