@@ -5,6 +5,7 @@
 package gsbperso;
 
 import com.mysql.jdbc.Connection;
+import java.awt.HeadlessException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Array;
 import java.sql.DriverManager;
@@ -169,8 +170,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuModif = new javax.swing.JMenuItem();
         jMenuCreer = new javax.swing.JMenuItem();
         jMenuPromouvoir = new javax.swing.JMenuItem();
-        aideMenu = new javax.swing.JMenu();
-        aproposMenuItem = new javax.swing.JMenuItem();
         nomjMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -855,7 +854,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jPanelCreation.setBounds(0, 0, 720, 841);
 
         jLabel7.setFont(new java.awt.Font("Sylfaen", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
         jLabel7.setText("Promouvoir ou Retrograder un Employé");
 
         jTablePromouv.setModel(new javax.swing.table.DefaultTableModel(
@@ -1011,21 +1010,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuAction.add(jMenuPromouvoir);
 
         nomMenuBar.add(jMenuAction);
-
-        aideMenu.setMnemonic('h');
-        aideMenu.setText("Aide");
-
-        aproposMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
-        aproposMenuItem.setMnemonic('c');
-        aproposMenuItem.setText("A propos");
-        aproposMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aproposMenuItemActionPerformed(evt);
-            }
-        });
-        aideMenu.add(aproposMenuItem);
-
-        nomMenuBar.add(aideMenu);
         nomMenuBar.add(nomjMenu);
 
         setJMenuBar(nomMenuBar);
@@ -1066,10 +1050,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         fenDeconnexion = new Deconnexion(this, true);
         this.fenDeconnexion.setVisible(true);
     }//GEN-LAST:event_deconnexionMenuItemActionPerformed
-
-    private void aproposMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aproposMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aproposMenuItemActionPerformed
 
     private void jMenuInfoPersoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInfoPersoActionPerformed
         this.jPanelInfoPerso.setVisible(true);
@@ -1125,15 +1105,36 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        Singleton.requeteAction("update utilisateurs set nom='" + this.jTextFieldNom.getText() + "', prenom='" + this.jTextFieldPrenom.getText() + "', adresse_rue='" + this.jTextFieldAdresse.getText() + "', adresse_cp='" + this.jTextFieldCP.getText() + "', adresse_ville='" + this.jTextFieldVille.getText() + "', tel_personnel='" + this.jTextFieldTelPerso.getText() + "', tel_professionnel='" + this.jTextFieldTelPro.getText() + "', site_web='" + this.jTextFieldSite.getText() + "' where id_utilisateur = " + this.personne.getId());
-        this.personne.setNom(this.jTextFieldNom.getText());
-        this.personne.setPrenom(this.jTextFieldPrenom.getText());
-        this.personne.setAdresse_rue(this.jTextFieldAdresse.getText());
-        this.personne.setAdresse_CP(this.jTextFieldCP.getText());
-        this.personne.setAdresse_ville(this.jTextFieldVille.getText());
-        this.personne.setTelPerso(this.jTextFieldTelPerso.getText());
-        this.personne.setTelPro(this.jTextFieldTelPro.getText());
-        this.personne.setSite(this.jTextFieldSite.getText());
+        try{
+            String nom = this.jTextFieldNom.getText();
+            String prenom = this.jTextFieldPrenom.getText();
+            String adresse_rue = this.jTextFieldAdresse.getText();
+            String adresse_cp = this.jTextFieldCP.getText();
+            String adresse_ville = this.jTextFieldVille.getText();
+            String tel_perso = this.jTextFieldTelPerso.getText();
+            String tel_pro = this.jTextFieldTelPro.getText();
+            String site = this.jTextFieldSite.getText();
+            if(Outils.estUnEntier(nom)== false && nom.length()>0 && Outils.estUnEntier(prenom)== false && prenom.length() > 0 && Outils.estUnEntier(adresse_rue)== false && adresse_rue.length() > 0 && Outils.estUnEntier(adresse_cp) && adresse_cp.length() > 0 && Outils.estUnEntier(adresse_ville)== false && adresse_ville.length() > 0 && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site)== false && site.length() > 0 && tel_perso.length()==10 && tel_pro.length()==10){   
+                Singleton.requeteAction("update utilisateurs set nom='" + nom + "', prenom='" + prenom + "', adresse_rue='" + adresse_rue + "', adresse_cp='" + adresse_cp + "', adresse_ville='" + adresse_ville + "', tel_personnel='" +tel_perso + "', tel_professionnel='" + tel_pro + "', site_web='" + site + "' where id_utilisateur = " + this.personne.getId());
+                JOptionPane.showMessageDialog(rootPane, "Informations modifiées.");
+                this.personne.setNom(nom);
+                this.personne.setPrenom(prenom);
+                this.personne.setAdresse_rue(adresse_rue);
+                this.personne.setAdresse_CP(adresse_cp);
+                this.personne.setAdresse_ville(adresse_ville);
+                this.personne.setTelPerso(tel_perso);
+                this.personne.setTelPro(tel_pro);
+                this.personne.setSite(site);
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Un champ a mal été renseigné ou est vide.");
+            }
+        } catch(HeadlessException ex){
+            String erreur = ex.getMessage();
+            System.out.println(erreur);
+            if("empty String".equals(erreur)){
+                JOptionPane.showMessageDialog(rootPane, "Veuillez remplir tous les champs.");
+            }
+        }
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jMenuFormationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFormationsActionPerformed
@@ -1304,7 +1305,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 default:
                     break;
             }
-            Singleton.requeteAction("insert into " + tuple + " (id_utilisateur," + libelle + ") VALUES(" + personne.getId() + ",'" + ajout + "');");
+            if(Outils.estUnEntier(ajout)==false && ajout.length()>0){
+                Singleton.requeteAction("insert into " + tuple + " (id_utilisateur," + libelle + ") VALUES(" + personne.getId() + ",'" + ajout + "');");
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Le champ a mal été renseigné ou est vide.");
+            }
             ResultSet lignesRetournees = Singleton.requeteSelection("select " + libelle + " from " + tuple + " where id_utilisateur = " + personne.getId());
             if (lignesRetournees.next()) {
                 lignesRetournees.last();
@@ -1537,23 +1542,36 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 permis = 1;
             }
             Integer cadre = 0;
-            Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('"+nom+"','"+prenom+"','"+adresse_rue+"','"+adresse_cp+"','"+adresse_ville+"','"+tel_perso+"','"+tel_pro+"',"+salaire+","+position+",'"+site+"','"+user+"','"+mdp+"',"+permis+","+cadre+")");
+            if(Outils.estUnEntier(nom)== false && Outils.estUnEntier(prenom)== false && Outils.estUnEntier(adresse_rue)== false && Outils.estUnEntier(adresse_cp) && Outils.estUnEntier(adresse_ville)== false && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site)== false && Outils.estUnEntier(user)== false && tel_perso.length()==10 && tel_pro.length()==10){   
+                Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('"+nom+"','"+prenom+"','"+adresse_rue+"','"+adresse_cp+"','"+adresse_ville+"','"+tel_perso+"','"+tel_pro+"',"+salaire+","+position+",'"+site+"','"+user+"','"+mdp+"',"+permis+","+cadre+")");           
+                JOptionPane.showMessageDialog(rootPane, "Employé crée.");
+                this.jTextFieldNom1.setText("");
+                this.jTextFieldPrenom1.setText("");
+                this.jTextFieldAdresse1.setText("");
+                this.jTextFieldAjoutEmail1.setText("");
+                this.jTextFieldCP1.setText("");
+                this.jTextFieldSite1.setText("");
+                this.jTextFieldTelPerso1.setText("");
+                this.jTextFieldTelPro1.setText("");
+                this.jTextFieldVille1.setText("");
+                this.jTextFieldSalaire1.setText("");
+                this.jTextFieldUser.setText("");
+                this.jTextFieldMDP.setText("");
+                this.jRadioButtonYes.setSelected(false);
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Un champ a mal été renseigné.");
+            }
             
-            this.jTextFieldNom1.setText("");
-            this.jTextFieldPrenom1.setText("");
-            this.jTextFieldAdresse1.setText("");
-            this.jTextFieldAjoutEmail1.setText("");
-            this.jTextFieldCP1.setText("");
-            this.jTextFieldSite1.setText("");
-            this.jTextFieldTelPerso1.setText("");
-            this.jTextFieldTelPro1.setText("");
-            this.jTextFieldVille1.setText("");
-            this.jTextFieldSalaire1.setText("");
-            this.jTextFieldUser.setText("");
-            this.jTextFieldMDP.setText("");
-            this.jRadioButtonYes.setSelected(false);
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(NumberFormatException ex){
+            String erreur = ex.getMessage();
+            if("empty String".equals(erreur)){
+                JOptionPane.showMessageDialog(rootPane, "Veuillez remplir tous les champs.");
+            }
+            if(erreur.equals("For input string: \"" + this.jTextFieldSalaire1.getText()+"\"")){
+                JOptionPane.showMessageDialog(rootPane, "Le champ 'Salaire requiert un nombre.");
+            }
         }
         
     }//GEN-LAST:event_jButtonValiderCreationActionPerformed
@@ -1608,10 +1626,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.MenuInformation.setVisible(true);
         if (laPosition.equals("Responsable")) {
             this.jMenuAction.setVisible(true);
+            this.jMenuModif.setVisible(true);
             this.jMenuCreer.setVisible(false);
             this.jMenuPromouvoir.setVisible(false);
         } else if (laPosition.equals("Directeur")) {
             this.jMenuAction.setVisible(true);
+            this.jMenuCreer.setVisible(true);
+            this.jMenuPromouvoir.setVisible(true);
             this.jMenuModif.setVisible(false);
 
         }
@@ -1684,8 +1705,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuGenererCV;
     private javax.swing.JMenu MenuInformation;
     private javax.swing.JMenuItem SortieMenuItem;
-    private javax.swing.JMenu aideMenu;
-    private javax.swing.JMenuItem aproposMenuItem;
     private javax.swing.JMenuItem connexionMenuItem;
     private javax.swing.JMenuItem deconnexionMenuItem;
     private javax.swing.JDesktopPane desktopPane;
