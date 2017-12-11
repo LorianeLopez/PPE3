@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package appli_etudiants;
-
+package gsbperso;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author Loriane
  */
-public class AppliEtudiantsTest {
+public class ConnexionTest {
     
-    public AppliEtudiantsTest() {
+    public ConnexionTest() {
     }
     
     @BeforeClass
@@ -39,14 +38,15 @@ public class AppliEtudiantsTest {
     }
 
     /**
-     * Test of main method, of class AppliEtudiants.
+     * Test of main method, of class Connexion.
      */
     @Test
     public void testMain() {
         System.out.println("main");
         String[] args = null;
+        Connexion.main(args);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
     
 }

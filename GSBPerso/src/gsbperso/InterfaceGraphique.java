@@ -5,7 +5,10 @@
 package gsbperso;
 
 import com.mysql.jdbc.Connection;
+import static gsbperso.CV.DEST;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Array;
 import java.sql.DriverManager;
@@ -959,6 +962,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jMenuCV.setText("CV");
 
         MenuGenererCV.setText("Générer au format PDF");
+        MenuGenererCV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuGenererCVActionPerformed(evt);
+            }
+        });
         jMenuCV.add(MenuGenererCV);
 
         nomMenuBar.add(jMenuCV);
@@ -1614,6 +1622,18 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private void jTextFieldTelPro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelPro1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTelPro1ActionPerformed
+
+    private void MenuGenererCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGenererCVActionPerformed
+        File file = new File(DEST);
+        file.getParentFile().mkdirs();
+        try {
+            new CV().createPdf(DEST, this.personne);
+            JOptionPane.showMessageDialog(rootPane, "PDF crée !");
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erreur ! Fermez le PDF.");
+        }
+    }//GEN-LAST:event_MenuGenererCVActionPerformed
 
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion

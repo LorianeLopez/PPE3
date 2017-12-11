@@ -72,6 +72,8 @@ public class CV {
                         email.next();
                     }
                 }
+            }else{
+                document.add(new Paragraph("Aucun email"));
             }
             document.add(emails);
             
