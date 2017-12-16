@@ -107,6 +107,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jButtonChoixIimage = new javax.swing.JButton();
         jLabelPhoto = new javax.swing.JLabel();
         jButtonGenerationCV = new javax.swing.JButton();
+        ButtonRetour = new javax.swing.JButton();
         jPanelInfoPerso = new javax.swing.JPanel();
         labelMail = new javax.swing.JLabel();
         labelSalaire = new javax.swing.JLabel();
@@ -335,10 +336,21 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             }
         });
 
+        ButtonRetour.setText("Retour");
+        ButtonRetour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRetourActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanelImageLayout = new org.jdesktop.layout.GroupLayout(jPanelImage);
         jPanelImage.setLayout(jPanelImageLayout);
         jPanelImageLayout.setHorizontalGroup(
             jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelImageLayout.createSequentialGroup()
+                .add(0, 129, Short.MAX_VALUE)
+                .add(jLabelPhoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 536, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(105, 105, 105))
             .add(jPanelImageLayout.createSequentialGroup()
                 .add(jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanelImageLayout.createSequentialGroup()
@@ -348,12 +360,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                         .add(212, 212, 212)
                         .add(jButtonChoixIimage)
                         .add(133, 133, 133)
-                        .add(jButtonGenerationCV)))
+                        .add(jButtonGenerationCV))
+                    .add(jPanelImageLayout.createSequentialGroup()
+                        .add(345, 345, 345)
+                        .add(ButtonRetour)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelImageLayout.createSequentialGroup()
-                .add(0, 129, Short.MAX_VALUE)
-                .add(jLabelPhoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 536, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(105, 105, 105))
         );
         jPanelImageLayout.setVerticalGroup(
             jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -366,7 +377,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 .add(jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jButtonChoixIimage)
                     .add(jButtonGenerationCV))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(ButtonRetour)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         desktopPane.add(jPanelImage);
@@ -1126,6 +1139,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
         this.jPanelImage.setVisible(false);
+        this.jPanelImage.setVisible(false);
         this.jPanelInfoPerso.setOpaque(false);
         this.jTextFieldNom.setText(this.personne.getNom());
         this.jTextFieldPrenom.setText(this.personne.getPrenom());
@@ -1212,6 +1226,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelInfoPerso.setVisible(false);
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
+        this.jPanelImage.setVisible(false);
         this.jPanelPromouv.setVisible(false);
         this.jPanelFormation.setOpaque(false);
         try {
@@ -1434,6 +1449,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(true);
         this.jPanelCreation.setVisible(false);
         this.jPanelPromouv.setVisible(false);
+        this.jPanelImage.setVisible(false);
         this.jPanelModif.setOpaque(false);
 
         String cadre = "";
@@ -1548,6 +1564,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelInfoPerso.setVisible(false);
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
+        this.jPanelImage.setVisible(false);
         this.jPanelPromouv.setVisible(true);
         this.jPanelPromouv.setOpaque(false);
         String position = "";
@@ -1689,6 +1706,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(false);
         this.jPanelPromouv.setVisible(false);
         this.jPanelCreation.setVisible(true);
+        this.jPanelImage.setVisible(false);
         this.jPanelCreation.setOpaque(false);
     }//GEN-LAST:event_jMenuCreerActionPerformed
 
@@ -1705,6 +1723,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTelPro1ActionPerformed
 
     private void MenuGenererCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGenererCVActionPerformed
+        this.jPanelInfoPerso.setVisible(false);
+        this.jPanelFormation.setVisible(false);
+        this.jPanelModif.setVisible(false);
+        this.jPanelPromouv.setVisible(false);
+        this.jPanelCreation.setVisible(false);
         this.jPanelImage.setVisible(true);
         this.jPanelImage.setOpaque(false);
     }//GEN-LAST:event_MenuGenererCVActionPerformed
@@ -1769,6 +1792,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonGenerationCVActionPerformed
 
+    private void ButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRetourActionPerformed
+        this.jPanelImage.setVisible(false);
+    }//GEN-LAST:event_ButtonRetourActionPerformed
+
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion
         this.connecte = true;
@@ -1823,6 +1850,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
         this.jPanelPromouv.setVisible(false);
+        this.jPanelImage.setVisible(false);
     }
 
     public void majConnexion() {
@@ -1865,6 +1893,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonRetour;
     private javax.swing.JMenuItem MenuGenererCV;
     private javax.swing.JMenu MenuInformation;
     private javax.swing.JMenuItem SortieMenuItem;
