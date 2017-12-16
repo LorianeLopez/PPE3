@@ -8,10 +8,13 @@ import com.mysql.jdbc.Connection;
 import static gsbperso.CV.DEST;
 import java.awt.HeadlessException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Array;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +27,10 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,6 +44,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
      */
     private boolean connecte;
     public Personne personne;
+    PanneauPhoto panneauPhoto = null;
+    JFileChooser choixPhoto = null;
+    ImageIcon lImage = null;
 
     /**
      * interface graphique
@@ -68,6 +77,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(false);
         this.jPanelPromouv.setVisible(false);
         this.jPanelCreation.setVisible(false);
+        this.jPanelImage.setVisible(false);
 
     }
 
@@ -92,6 +102,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jButtonReturn = new javax.swing.JButton();
         jLabelPermis = new javax.swing.JLabel();
         jButtonPermis = new javax.swing.JButton();
+        jPanelImage = new javax.swing.JPanel();
+        jLabelTitre = new javax.swing.JLabel();
+        jButtonChoixIimage = new javax.swing.JButton();
+        jLabelPhoto = new javax.swing.JLabel();
+        jButtonGenerationCV = new javax.swing.JButton();
         jPanelInfoPerso = new javax.swing.JPanel();
         labelMail = new javax.swing.JLabel();
         labelSalaire = new javax.swing.JLabel();
@@ -191,7 +206,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
         jLabel5.setText("Formations, Stages, Langues, Permis, Hobbies");
 
-        jComboBoxInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Formations", "Stages", "Langues", "Hobbies", "Expérience" }));
+        jComboBoxInfo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Formations", "Stages", "Langues", "Hobbies", "Expériences", "Compétences" }));
         jComboBoxInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxInfoActionPerformed(evt);
@@ -242,7 +257,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelFormationLayout.createSequentialGroup()
                 .add(36, 36, 36)
-                .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jPanelFormationLayout.createSequentialGroup()
                         .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanelFormationLayout.createSequentialGroup()
@@ -258,8 +273,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                         .add(jButtonReturn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 80, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(197, 197, 197))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelFormationLayout.createSequentialGroup()
-                        .add(jComboBoxInfo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(100, 100, 100)
+                        .add(jComboBoxInfo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(jPanelFormationLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                             .add(jTextFieldAjout)
                             .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 431, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
@@ -301,6 +316,61 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         desktopPane.add(jPanelFormation);
         jPanelFormation.setBounds(0, 0, 770, 760);
+
+        jLabelTitre.setFont(new java.awt.Font("Sylfaen", 3, 24)); // NOI18N
+        jLabelTitre.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelTitre.setText("Choisir une image");
+
+        jButtonChoixIimage.setText("Choisir Photo");
+        jButtonChoixIimage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChoixIimageActionPerformed(evt);
+            }
+        });
+
+        jButtonGenerationCV.setText("Générer le CV");
+        jButtonGenerationCV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerationCVActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPanelImageLayout = new org.jdesktop.layout.GroupLayout(jPanelImage);
+        jPanelImage.setLayout(jPanelImageLayout);
+        jPanelImageLayout.setHorizontalGroup(
+            jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelImageLayout.createSequentialGroup()
+                .add(jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanelImageLayout.createSequentialGroup()
+                        .add(268, 268, 268)
+                        .add(jLabelTitre, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 224, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanelImageLayout.createSequentialGroup()
+                        .add(212, 212, 212)
+                        .add(jButtonChoixIimage)
+                        .add(133, 133, 133)
+                        .add(jButtonGenerationCV)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanelImageLayout.createSequentialGroup()
+                .add(0, 129, Short.MAX_VALUE)
+                .add(jLabelPhoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 536, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(105, 105, 105))
+        );
+        jPanelImageLayout.setVerticalGroup(
+            jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanelImageLayout.createSequentialGroup()
+                .add(35, 35, 35)
+                .add(jLabelTitre)
+                .add(39, 39, 39)
+                .add(jLabelPhoto, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 573, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(34, 34, 34)
+                .add(jPanelImageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButtonChoixIimage)
+                    .add(jButtonGenerationCV))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        desktopPane.add(jPanelImage);
+        jPanelImage.setBounds(0, 0, 770, 790);
 
         jPanelInfoPerso.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1042,8 +1112,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
          */
         this.fenConnexion = new Connexion(this, true);
         this.fenConnexion.setVisible(true);
-
-        //JOptionPane.showMessageDialog(this, "cc");
     }//GEN-LAST:event_connexionMenuItemActionPerformed
 
     private void deconnexionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionMenuItemActionPerformed
@@ -1057,6 +1125,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelFormation.setVisible(false);
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
+        this.jPanelImage.setVisible(false);
         this.jPanelInfoPerso.setOpaque(false);
         this.jTextFieldNom.setText(this.personne.getNom());
         this.jTextFieldPrenom.setText(this.personne.getPrenom());
@@ -1106,7 +1175,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRetourActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        try{
+        try {
             String nom = this.jTextFieldNom.getText();
             String prenom = this.jTextFieldPrenom.getText();
             String adresse_rue = this.jTextFieldAdresse.getText();
@@ -1115,8 +1184,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             String tel_perso = this.jTextFieldTelPerso.getText();
             String tel_pro = this.jTextFieldTelPro.getText();
             String site = this.jTextFieldSite.getText();
-            if(Outils.estUnEntier(nom)== false && nom.length()>0 && Outils.estUnEntier(prenom)== false && prenom.length() > 0 && Outils.estUnEntier(adresse_rue)== false && adresse_rue.length() > 0 && Outils.estUnEntier(adresse_cp) && adresse_cp.length() > 0 && Outils.estUnEntier(adresse_ville)== false && adresse_ville.length() > 0 && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site)== false && site.length() > 0 && tel_perso.length()==10 && tel_pro.length()==10){   
-                Singleton.requeteAction("update utilisateurs set nom='" + nom + "', prenom='" + prenom + "', adresse_rue='" + adresse_rue + "', adresse_cp='" + adresse_cp + "', adresse_ville='" + adresse_ville + "', tel_personnel='" +tel_perso + "', tel_professionnel='" + tel_pro + "', site_web='" + site + "' where id_utilisateur = " + this.personne.getId());
+            if (Outils.estUnEntier(nom) == false && nom.length() > 0 && Outils.estUnEntier(prenom) == false && prenom.length() > 0 && Outils.estUnEntier(adresse_rue) == false && adresse_rue.length() > 0 && Outils.estUnEntier(adresse_cp) && adresse_cp.length() > 0 && Outils.estUnEntier(adresse_ville) == false && adresse_ville.length() > 0 && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site) == false && site.length() > 0 && tel_perso.length() == 10 && tel_pro.length() == 10) {
+                Singleton.requeteAction("update utilisateurs set nom='" + nom + "', prenom='" + prenom + "', adresse_rue='" + adresse_rue + "', adresse_cp='" + adresse_cp + "', adresse_ville='" + adresse_ville + "', tel_personnel='" + tel_perso + "', tel_professionnel='" + tel_pro + "', site_web='" + site + "' where id_utilisateur = " + this.personne.getId());
                 JOptionPane.showMessageDialog(rootPane, "Informations modifiées.");
                 this.personne.setNom(nom);
                 this.personne.setPrenom(prenom);
@@ -1126,13 +1195,13 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 this.personne.setTelPerso(tel_perso);
                 this.personne.setTelPro(tel_pro);
                 this.personne.setSite(site);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Un champ a mal été renseigné ou est vide.");
             }
-        } catch(HeadlessException ex){
+        } catch (HeadlessException ex) {
             String erreur = ex.getMessage();
             System.out.println(erreur);
-            if("empty String".equals(erreur)){
+            if ("empty String".equals(erreur)) {
                 JOptionPane.showMessageDialog(rootPane, "Veuillez remplir tous les champs.");
             }
         }
@@ -1144,7 +1213,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelModif.setVisible(false);
         this.jPanelCreation.setVisible(false);
         this.jPanelPromouv.setVisible(false);
-        this.jPanelFormation.setOpaque(false);        
+        this.jPanelFormation.setOpaque(false);
         try {
             ResultSet lignesRetournees = Singleton.requeteSelection("select libelle_formation from cv_formation where id_utilisateur = " + personne.getId());
             if (lignesRetournees.next()) {
@@ -1204,6 +1273,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                     tuple = "cv_experience_prof";
                     libelle = "libelle_experience_prof";
                     break;
+                case 5:
+                    tuple = "cv_informatique";
+                    libelle = "libelle_informatique";
                 default:
                     break;
             }
@@ -1253,6 +1325,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                     tuple = "cv_experience_prof";
                     libelle = "libelle_experience_prof";
                     break;
+                case 5:
+                    tuple = "cv_informatique";
+                    libelle = "libelle_informatique";
                 default:
                     break;
             }
@@ -1303,12 +1378,15 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                     tuple = "cv_experience_prof";
                     libelle = "libelle_experience_prof";
                     break;
+                case 5:
+                    tuple = "cv_informatique";
+                    libelle = "libelle_informatique";
                 default:
                     break;
             }
-            if(Outils.estUnEntier(ajout)==false && ajout.length()>0){
+            if (Outils.estUnEntier(ajout) == false && ajout.length() > 0) {
                 Singleton.requeteAction("insert into " + tuple + " (id_utilisateur," + libelle + ") VALUES(" + personne.getId() + ",'" + ajout + "');");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Le champ a mal été renseigné ou est vide.");
             }
             ResultSet lignesRetournees = Singleton.requeteSelection("select " + libelle + " from " + tuple + " where id_utilisateur = " + personne.getId());
@@ -1357,14 +1435,14 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelCreation.setVisible(false);
         this.jPanelPromouv.setVisible(false);
         this.jPanelModif.setOpaque(false);
-        
+
         String cadre = "";
         DefaultTableModel leModel = (DefaultTableModel) jTablePosition.getModel();
-        if(leModel.getRowCount() > 0){
-            for(int i = 0; i <= leModel.getRowCount(); i++){
-                if(i>=1){
-                    leModel.removeRow(i-1);
-                }else{
+        if (leModel.getRowCount() > 0) {
+            for (int i = 0; i <= leModel.getRowCount(); i++) {
+                if (i >= 1) {
+                    leModel.removeRow(i - 1);
+                } else {
                     leModel.removeRow(i);
                 }
             }
@@ -1382,7 +1460,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                     } else if (lignesRetournees.getInt("cadre") == 1) {
                         cadre = "Cadre";
                     }
-                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"),lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), cadre});
+                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), cadre});
                     if (i < longueur) {
                         lignesRetournees.next();
                     }
@@ -1401,17 +1479,17 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         String changeValue = "";
         Integer cadre = 0;
         Integer salaire = 1;
-        if(positionStr == "Cadre"){
+        if (positionStr == "Cadre") {
             changeValue = "Non Cadre";
             cadre = 0;
             salaire = 1;
-        }else if(positionStr == "Non Cadre"){
+        } else if (positionStr == "Non Cadre") {
             changeValue = "Cadre";
             cadre = 1;
             salaire = 2;
         }
         jTablePosition.getModel().setValueAt(changeValue, jTablePosition.getSelectedRow(), 3);
-        Singleton.requeteAction("update utilisateurs set cadre = "+cadre+", salaire = "+salaire+" where id_utilisateur = "+id);
+        Singleton.requeteAction("update utilisateurs set cadre = " + cadre + ", salaire = " + salaire + " where id_utilisateur = " + id);
     }//GEN-LAST:event_jTablePositionMouseClicked
 
     private void jButtonRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetActionPerformed
@@ -1474,11 +1552,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelPromouv.setOpaque(false);
         String position = "";
         DefaultTableModel leModel = (DefaultTableModel) jTablePromouv.getModel();
-        if(leModel.getRowCount() > 0){
-            for(int i = 0; i <= leModel.getRowCount(); i++){
-                if(i>=1){
-                    leModel.removeRow(i-1);
-                }else{
+        if (leModel.getRowCount() > 0) {
+            for (int i = 0; i <= leModel.getRowCount(); i++) {
+                if (i >= 1) {
+                    leModel.removeRow(i - 1);
+                } else {
                     leModel.removeRow(i);
                 }
             }
@@ -1496,7 +1574,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                     } else if (lignesRetournees.getInt("position") == 1) {
                         position = "Responsable";
                     }
-                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"),lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), position});
+                    leModel.addRow(new Object[]{lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), position});
                     if (i < longueur) {
                         lignesRetournees.next();
                     }
@@ -1505,7 +1583,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jMenuPromouvoirActionPerformed
 
     private void jTablePromouvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePromouvMouseClicked
@@ -1516,16 +1594,16 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         String changeValue = "";
         Integer position = 0;
         Integer salaire = 0;
-        if(positionStr == "Responsable"){
+        if (positionStr == "Responsable") {
             changeValue = "Employé";
             salaire = 2;
-        }else if(positionStr == "Employé"){
+        } else if (positionStr == "Employé") {
             changeValue = "Responsable";
             position = 1;
             salaire = 4;
         }
         jTablePromouv.getModel().setValueAt(changeValue, jTablePromouv.getSelectedRow(), 3);
-        Singleton.requeteAction("update utilisateurs set position = "+position+", salaire = "+salaire+" where id_utilisateur = "+id);
+        Singleton.requeteAction("update utilisateurs set position = " + position + ", salaire = " + salaire + " where id_utilisateur = " + id);
     }//GEN-LAST:event_jTablePromouvMouseClicked
 
     private void jButtonValiderCreationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderCreationActionPerformed
@@ -1546,17 +1624,17 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             String user = this.jTextFieldUser.getText();
             String mdp = this.jTextFieldMDP.getText();
             mdp = Outils.md5(mdp);
-            
+
             Integer permis = 0;
-            if(this.jRadioButtonYes.isSelected()){
+            if (this.jRadioButtonYes.isSelected()) {
                 permis = 1;
             }
             Integer cadre = 0;
-            if(Outils.estUnEntier(nom)== false && Outils.estUnEntier(prenom)== false && Outils.estUnEntier(adresse_rue)== false && Outils.estUnEntier(adresse_cp) && Outils.estUnEntier(adresse_ville)== false && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site)== false && Outils.estUnEntier(user)== false && tel_perso.length()==10 && tel_pro.length()==10){   
-                Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, dateEmbauche, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('"+nom+"','"+prenom+"','"+adresse_rue+"','"+adresse_cp+"','"+adresse_ville+"','"+tel_perso+"','"+tel_pro+"',"+salaire+",'"+ dateFormat.format(embauche) +"',"+position+",'"+site+"','"+user+"','"+mdp+"',"+permis+","+cadre+")");           
-                ResultSet id = Singleton.requeteSelection("SELECT id_utilisateur from utilisateurs where nom = '"+nom+"' and prenom = '"+prenom+"'");
-                if(id.next()){
-                    Singleton.requeteAction("INSERT INTO cv_email (id_utilisateur, libelle_email) VALUES("+id.getInt("id_utilisateur")+",'"+ email+"')");
+            if (Outils.estUnEntier(nom) == false && Outils.estUnEntier(prenom) == false && Outils.estUnEntier(adresse_rue) == false && Outils.estUnEntier(adresse_cp) && Outils.estUnEntier(adresse_ville) == false && Outils.estUnEntier(tel_perso) && Outils.estUnEntier(tel_pro) && Outils.estUnEntier(site) == false && Outils.estUnEntier(user) == false && tel_perso.length() == 10 && tel_pro.length() == 10) {
+                Singleton.requeteAction("INSERT INTO utilisateurs (nom, prenom, adresse_rue, adresse_cp, adresse_ville, tel_personnel, tel_professionnel, salaire, dateEmbauche, position, site_web, identifiant, mot_de_passe, permis, cadre) VALUES('" + nom + "','" + prenom + "','" + adresse_rue + "','" + adresse_cp + "','" + adresse_ville + "','" + tel_perso + "','" + tel_pro + "'," + salaire + ",'" + dateFormat.format(embauche) + "'," + position + ",'" + site + "','" + user + "','" + mdp + "'," + permis + "," + cadre + ")");
+                ResultSet id = Singleton.requeteSelection("SELECT id_utilisateur from utilisateurs where nom = '" + nom + "' and prenom = '" + prenom + "'");
+                if (id.next()) {
+                    Singleton.requeteAction("INSERT INTO cv_email (id_utilisateur, libelle_email) VALUES(" + id.getInt("id_utilisateur") + ",'" + email + "')");
                 }
                 JOptionPane.showMessageDialog(rootPane, "Employé crée.");
                 this.jTextFieldNom1.setText("");
@@ -1571,21 +1649,21 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 this.jTextFieldUser.setText("");
                 this.jTextFieldMDP.setText("");
                 this.jRadioButtonYes.setSelected(false);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Un champ a mal été renseigné.");
             }
-            
+
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             String erreur = ex.getMessage();
-            if("empty String".equals(erreur)){
+            if ("empty String".equals(erreur)) {
                 JOptionPane.showMessageDialog(rootPane, "Veuillez remplir tous les champs.");
             }
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButtonValiderCreationActionPerformed
 
     private void jButtonAnnulerRemplissageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerRemplissageActionPerformed
@@ -1627,6 +1705,59 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldTelPro1ActionPerformed
 
     private void MenuGenererCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGenererCVActionPerformed
+        this.jPanelImage.setVisible(true);
+        this.jPanelImage.setOpaque(false);
+    }//GEN-LAST:event_MenuGenererCVActionPerformed
+
+    private void jButtonChoixIimageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChoixIimageActionPerformed
+        if (choixPhoto == null) {
+            choixPhoto = new JFileChooser(".");
+            choixPhoto.setFileFilter(new FileNameExtensionFilter("Images", "png", "jpg"));
+        }
+        choixPhoto.setCurrentDirectory(choixPhoto.getCurrentDirectory());
+        choixPhoto.showOpenDialog(null);
+        if (choixPhoto.getSelectedFile() == null) {
+            choixPhoto = null;
+        } else {
+            this.lImage = new ImageIcon(choixPhoto.getSelectedFile().toString());
+        }
+        if (lImage != null) {
+            jLabelPhoto.getGraphics().drawImage(lImage.getImage(), 0, 0, null);
+        }
+    }//GEN-LAST:event_jButtonChoixIimageActionPerformed
+
+    private void jButtonGenerationCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerationCVActionPerformed
+        if(choixPhoto!= null){
+        File monImage = new File(choixPhoto.getSelectedFile().getPath());
+            FileInputStream istreamImage = null;
+            try {
+                istreamImage = new FileInputStream(monImage);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                try (PreparedStatement ps = Singleton.getInstance().prepareStatement("replace into cv_photo values ("+this.personne.getId()+",?)")) {
+                    try {
+                        ps.setBinaryStream(1, istreamImage, (int) monImage.length());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        ps.executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }catch(SQLException ex){
+                    Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } finally {
+                try {
+                    istreamImage.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         try {
@@ -1636,7 +1767,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(rootPane, "Erreur ! Fermez le PDF.");
         }
-    }//GEN-LAST:event_MenuGenererCVActionPerformed
+    }//GEN-LAST:event_jButtonGenerationCVActionPerformed
 
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion
@@ -1662,7 +1793,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         try {
             ResultSet lignesRetournees = Singleton.requeteSelection("select * from utilisateurs where nom='" + leNom + "'");
             ResultSet salaires = Singleton.requeteSelection("select montant from salaire, utilisateurs where salaire.id_salaire = utilisateurs.salaire and nom='" + leNom + "'");
-            if (lignesRetournees.next()&& salaires.next()) {
+            if (lignesRetournees.next() && salaires.next()) {
                 Float montant = salaires.getFloat("montant");
                 Calendar calendar = new GregorianCalendar();
                 Date embauche = lignesRetournees.getDate("dateEmbauche");
@@ -1670,7 +1801,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy");
                 Date today = new Date();
                 int difference = Integer.valueOf(dateFormat.format(today)) - calendar.get(Calendar.YEAR);
-                Float salaire = montant + (difference * (montant *3/100)) ;
+                Float salaire = montant + (difference * (montant * 3 / 100));
                 this.personne = new Personne(lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), lignesRetournees.getString("adresse_rue"), lignesRetournees.getString("adresse_cp"), lignesRetournees.getString("adresse_ville"), salaire, lignesRetournees.getString("tel_personnel"), lignesRetournees.getString("tel_professionnel"), lignesRetournees.getString("site_web"), laPosition, lignesRetournees.getInt("permis"), lignesRetournees.getInt("cadre"));
             }
         } catch (SQLException ex) {
@@ -1746,6 +1877,8 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAjoutEmail;
     private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonAnnulerRemplissage;
+    private javax.swing.JButton jButtonChoixIimage;
+    private javax.swing.JButton jButtonGenerationCV;
     private javax.swing.JButton jButtonPermis;
     private javax.swing.JButton jButtonRet;
     private javax.swing.JButton jButtonRetour;
@@ -1769,7 +1902,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelPermis;
+    private javax.swing.JLabel jLabelPhoto;
     private javax.swing.JLabel jLabelPosition;
+    private javax.swing.JLabel jLabelTitre;
     private javax.swing.JList<String> jListeForm;
     private javax.swing.JList<String> jListmail;
     private javax.swing.JMenu jMenuAction;
@@ -1781,6 +1916,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuPromouvoir;
     private javax.swing.JPanel jPanelCreation;
     private javax.swing.JPanel jPanelFormation;
+    private javax.swing.JPanel jPanelImage;
     private javax.swing.JPanel jPanelInfoPerso;
     private javax.swing.JPanel jPanelModif;
     private javax.swing.JPanel jPanelPromouv;

@@ -11,30 +11,42 @@ package gsbperso;
  */
 
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.AreaBreak;
+import com.itextpdf.layout.element.IBlockElement;
 import com.itextpdf.layout.element.List;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.ListItem;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.test.annotations.WrapToTest;
+//import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
+
 
 public class CV {
 
     public static final String DEST = "results/chapter01/cv.pdf";
 
-    public static void main(String args[]) throws IOException, SQLException {
-//        File file = new File(DEST);
-//        file.getParentFile().mkdirs();
-//        new CV().createPdf(DEST,1);
-    }
     
     public void createPdf(String dest, Personne laPersonne) throws IOException, SQLException {
         File file = new File(DEST);
@@ -47,16 +59,28 @@ public class CV {
 
         // Create a PdfFont
         try ( // Initialize document
-                Document document = new Document(pdf)) {
+            Document document = new Document(pdf)) {
             // Create a PdfFont
             PdfFont font = PdfFontFactory.createFont(FontConstants.COURIER_BOLD);
             PdfFont font2 = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
-            document.add(new Paragraph(laPersonne.getPrenom() + " " + laPersonne.getPrenom()+"\n \n").setFont(font));
+            ResultSet images = Singleton.requeteSelection("select url from cv_photo where id_utilisateur = " + laPersonne.getId());
+            if(images.next()){
+                Blob blob = images.getBlob("url");
+                int bloblength = (int) blob.length();
+                byte[] data = images.getBlob("url").getBytes(1, bloblength);
+                ImageData img = ImageDataFactory.create(data);
+                Image image = new Image(img);
+                image.setWidth(130);
+                image.setHeight(160);
+                document.add(image);
+            }
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph(laPersonne.getPrenom() + " " + laPersonne.getNom()+"\n \n").setFont(font).setFontSize(20));
             document.add(new Paragraph(laPersonne.getAdresse_rue() + " \n" + laPersonne.getAdresse_CP() + " " + laPersonne.getAdresse_ville()+ " \n \n").setFont(font));
             document.add(new Paragraph("Tel : " + laPersonne.getTelPro()+ " \n").setFont(font));
             document.add(new Paragraph("Port : " + laPersonne.getTelPerso()+ " \n \n").setFont(font));
             
-            document.add(new Paragraph("Email : ").setFont(font2));
+            document.add(new Paragraph("Email : ").setFont(font2).setFontSize(14).setUnderline());
             List emails = new List()
                     .setSymbolIndent(12)
                     .setListSymbol("\u2022")
@@ -73,14 +97,10 @@ public class CV {
                     }
                 }
             }else{
-                document.add(new Paragraph("Aucun email"));
+                document.add(new Paragraph("Aucun email").setFont(font));
             }
             document.add(emails);
-            
-            if(laPersonne.getPermis() == 1){
-                document.add(new Paragraph("\n Permis B \n \n").setFont(font));
-            }
-            document.add(new Paragraph("Formations : \n").setFont(font2));
+            document.add(new Paragraph("\n Formations : \n").setFont(font2).setFontSize(14).setUnderline());
             List formation = new List()
                     .setSymbolIndent(12)
                     .setListSymbol("\u2022")
@@ -99,7 +119,7 @@ public class CV {
             }
             document.add(formation);
             
-            document.add(new Paragraph("\n Experience Professionnelle : \n").setFont(font2));
+            document.add(new Paragraph("\n Experience Professionnelle : \n").setFont(font2).setFontSize(14).setUnderline());
             List experience = new List()
                     .setSymbolIndent(12)
                     .setListSymbol("\u2022")
@@ -115,8 +135,16 @@ public class CV {
                         experiences.next();
                     }
                 }
+            }else{
+                document.add(new Paragraph("Aucune expérience").setFont(font));
             }
             document.add(experience);
+            
+            if(laPersonne.getPermis() == 1){
+                document.add(new Paragraph("\n Permis B \n \n").setFont(font));
+            }else{
+                document.add(new Paragraph("\n Permis B non acquis \n \n").setFont(font));
+            }
             //Close document
         }
     }
