@@ -73,10 +73,17 @@ public class CV {
                 image.setWidth(130);
                 image.setHeight(160);
                 document.add(image);
+            }else{
+                document.add(new Paragraph("Aucune image sélectionnée."));
             }
             document.add(new Paragraph("\n"));
             document.add(new Paragraph(laPersonne.getPrenom() + " " + laPersonne.getNom()+"\n \n").setFont(font).setFontSize(20));
-            document.add(new Paragraph(laPersonne.getAdresse_rue() + " \n" + laPersonne.getAdresse_CP() + " " + laPersonne.getAdresse_ville()+ " \n \n").setFont(font));
+            document.add(new Paragraph(laPersonne.getAdresse_rue() + " \n" + laPersonne.getAdresse_CP() + " " + laPersonne.getAdresse_ville()+ " \n").setFont(font));
+            if(laPersonne.getPermis() == 1){
+                document.add(new Paragraph("\n Permis B \n \n").setFont(font));
+            }else{
+                document.add(new Paragraph("\n Permis B non acquis \n \n").setFont(font));
+            }
             document.add(new Paragraph("Tel : " + laPersonne.getTelPro()+ " \n").setFont(font));
             document.add(new Paragraph("Port : " + laPersonne.getTelPerso()+ " \n \n").setFont(font));
             
@@ -116,6 +123,8 @@ public class CV {
                         formations.next();
                     }
                 }
+            }else{
+                document.add(new Paragraph("Aucune formation."));
             }
             document.add(formation);
             
@@ -140,11 +149,90 @@ public class CV {
             }
             document.add(experience);
             
-            if(laPersonne.getPermis() == 1){
-                document.add(new Paragraph("\n Permis B \n \n").setFont(font));
+            document.add(new Paragraph("\n Stages : \n").setFont(font2).setFontSize(14).setUnderline());
+            List stages = new List()
+                    .setSymbolIndent(12)
+                    .setListSymbol("\u2022")
+                    .setFont(font);
+            ResultSet stage = Singleton.requeteSelection("select libelle_stage from cv_stages where id_utilisateur = " + laPersonne.getId());
+            if(stage.next()){
+                stage.last();
+                int longueur2 = stage.getRow();
+                stage.first();
+                for (int i = 1; i <= longueur2; i++) {
+                    stages.add(new ListItem(stage.getString("libelle_stage")));
+                    if (i < longueur2) {
+                        stage.next();
+                    }
+                }
             }else{
-                document.add(new Paragraph("\n Permis B non acquis \n \n").setFont(font));
+                document.add(new Paragraph("Aucun stage").setFont(font));
             }
+            document.add(stages);
+            
+            document.add(new Paragraph("\n Compétences Informatique : \n").setFont(font2).setFontSize(14).setUnderline());
+            List competences = new List()
+                    .setSymbolIndent(12)
+                    .setListSymbol("\u2022")
+                    .setFont(font);
+            ResultSet informatique = Singleton.requeteSelection("select libelle_informatique from cv_informatique where id_utilisateur = " + laPersonne.getId());
+            if(informatique.next()){
+                informatique.last();
+                int longueur2 = informatique.getRow();
+                informatique.first();
+                for (int i = 1; i <= longueur2; i++) {
+                    competences.add(new ListItem(informatique.getString("libelle_informatique")));
+                    if (i < longueur2) {
+                        informatique.next();
+                    }
+                }
+            }else{
+                document.add(new Paragraph("Aucune compétence").setFont(font));
+            }
+            document.add(competences);
+            
+            document.add(new Paragraph("\n Langues : \n").setFont(font2).setFontSize(14).setUnderline());
+            List langue = new List()
+                    .setSymbolIndent(12)
+                    .setListSymbol("\u2022")
+                    .setFont(font);
+            ResultSet langues = Singleton.requeteSelection("select libelle_langue from cv_langue where id_utilisateur = " + laPersonne.getId());
+            if(langues.next()){
+                langues.last();
+                int longueur2 = langues.getRow();
+                langues.first();
+                for (int i = 1; i <= longueur2; i++) {
+                    langue.add(new ListItem(langues.getString("libelle_langue")));
+                    if (i < longueur2) {
+                        langues.next();
+                    }
+                }
+            }else{
+                document.add(new Paragraph("Aucune langue parlée").setFont(font));
+            }
+            document.add(langue);
+            
+            document.add(new Paragraph("\n Centre d'intéret : \n").setFont(font2).setFontSize(14).setUnderline());
+            List centre = new List()
+                    .setSymbolIndent(12)
+                    .setListSymbol("\u2022")
+                    .setFont(font);
+            ResultSet interet = Singleton.requeteSelection("select libelle_centre_interet from cv_centre_interet where id_utilisateur = " + laPersonne.getId());
+            if(interet.next()){
+                interet.last();
+                int longueur2 = interet.getRow();
+                interet.first();
+                for (int i = 1; i <= longueur2; i++) {
+                    centre.add(new ListItem(interet.getString("libelle_centre_interet")));
+                    if (i < longueur2) {
+                        interet.next();
+                    }
+                }
+            }else{
+                document.add(new Paragraph("Aucune centre d'intéret").setFont(font));
+            }
+            document.add(centre);
+            
             //Close document
         }
     }
