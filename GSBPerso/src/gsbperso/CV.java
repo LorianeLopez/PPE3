@@ -47,7 +47,13 @@ public class CV {
 
     public static final String DEST = "results/chapter01/cv.pdf";
 
-    
+    /**
+     * Créée un pdf avec les informations de la bdd telle que les formations, les compétences, les langues parlées, les stages effectuée et l'expérience professionnelle de l'emploté
+     * @param dest
+     * @param laPersonne
+     * @throws IOException
+     * @throws SQLException 
+     */
     public void createPdf(String dest, Personne laPersonne) throws IOException, SQLException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();

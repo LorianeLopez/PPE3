@@ -312,9 +312,6 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldAjout">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAjoutActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonAjout">
               <Properties>
@@ -1238,9 +1235,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldAdresse1">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldAdresse1ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldAjoutEmail1">
             </Component>
@@ -1253,9 +1247,6 @@
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value="Format Fran&#xe7;ais, sans espace"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTelPro1ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldSite1">
             </Component>
@@ -1351,9 +1342,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Permis A"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonYesActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">
               <Properties>

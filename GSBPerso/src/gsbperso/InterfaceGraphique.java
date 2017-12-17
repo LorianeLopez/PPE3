@@ -44,7 +44,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
      */
     private boolean connecte;
     public Personne personne;
-    PanneauPhoto panneauPhoto = null;
     JFileChooser choixPhoto = null;
     ImageIcon lImage = null;
 
@@ -211,12 +210,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         jComboBoxInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxInfoActionPerformed(evt);
-            }
-        });
-
-        jTextFieldAjout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAjoutActionPerformed(evt);
             }
         });
 
@@ -740,20 +733,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldAdresse1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAdresse1ActionPerformed(evt);
-            }
-        });
-
         jTextFieldTelPerso1.setToolTipText("Format Français, sans espace");
 
         jTextFieldTelPro1.setToolTipText("Format Français, sans espace");
-        jTextFieldTelPro1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTelPro1ActionPerformed(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
@@ -786,11 +768,6 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         labelPrenom1.setText("Prénom");
 
         jRadioButtonYes.setText("Permis A");
-        jRadioButtonYes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonYesActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(153, 153, 153));
@@ -1111,11 +1088,19 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Permet de fermer l'application
+     * @param evt 
+     */
     private void SortieMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortieMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_SortieMenuItemActionPerformed
-
+    
+    /**
+     * Ouvre la fenêtre de connexion
+     * @param evt 
+     */
     private void connexionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexionMenuItemActionPerformed
         // TODO add your handling code here:
 
@@ -1126,13 +1111,21 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.fenConnexion = new Connexion(this, true);
         this.fenConnexion.setVisible(true);
     }//GEN-LAST:event_connexionMenuItemActionPerformed
-
+    
+    /**
+     * Ouvre la fenêtre de deconnexion
+     * @param evt 
+     */
     private void deconnexionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionMenuItemActionPerformed
         // TODO add your handling code here:
         fenDeconnexion = new Deconnexion(this, true);
         this.fenDeconnexion.setVisible(true);
     }//GEN-LAST:event_deconnexionMenuItemActionPerformed
-
+    
+    /**
+     * Cache les autres fenêtres possiblement ouvertes, affiche le panel d'informations et met à jour les informations de l'employé
+     * @param evt 
+     */
     private void jMenuInfoPersoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuInfoPersoActionPerformed
         this.jPanelInfoPerso.setVisible(true);
         this.jPanelFormation.setVisible(false);
@@ -1170,7 +1163,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuInfoPersoActionPerformed
-
+    
+    /**
+     * Permet de remettre les valeurs initiales si l'enregistrement dans la bdd n'a pas encore été fait.
+     * @param evt 
+     */
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         this.jTextFieldNom.setText(this.personne.getNom());
         this.jTextFieldPrenom.setText(this.personne.getPrenom());
@@ -1183,11 +1180,19 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jTextFieldSite.setText(this.personne.getSite());
         this.labelduSalaire.setText(this.personne.getSalaire() + " euros");
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
-
+    
+    /**
+ * Permet de cacher le panel des informations personnelles
+ * @param evt 
+ */
     private void jButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetourActionPerformed
         this.jPanelInfoPerso.setVisible(false);
     }//GEN-LAST:event_jButtonRetourActionPerformed
-
+    
+    /**
+     * Valide les nouvelles données saisies et les enregistre dans la bdd
+     * @param evt 
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         try {
             String nom = this.jTextFieldNom.getText();
@@ -1220,7 +1225,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButtonValiderActionPerformed
-
+    
+    /**
+     * Cache les fenêtres possiblement ouvertes, affiche le panel de Formations et affiche les données de formations de l'employé et l'aquisition ou non de son permis
+     * @param evt 
+     */
     private void jMenuFormationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuFormationsActionPerformed
         this.jPanelFormation.setVisible(true);
         this.jPanelInfoPerso.setVisible(false);
@@ -1253,13 +1262,21 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             jLabelPermis.setText("Non Titulaire du Permis B");
         }
     }//GEN-LAST:event_jMenuFormationsActionPerformed
-
+    
+    /**
+     * Permet de cacher le panel des formations et de vider la liste
+     * @param evt 
+     */
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
         this.jPanelFormation.setVisible(false);
         DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
         Select.clear();
     }//GEN-LAST:event_jButtonReturnActionPerformed
-
+    
+    /**
+     * Affiche selon la selection les formations, stages, langues, centres d'intéret, experiences professionnelles et compétences informatique de l'employé
+     * @param evt 
+     */
     private void jComboBoxInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxInfoActionPerformed
         DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
         Select.clear();
@@ -1310,7 +1327,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jComboBoxInfoActionPerformed
-
+    
+    /**
+     * Permet de supprimer dans la table correcte de la bdd l'information selectionnée
+     * @param evt 
+     */
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         String texte = jListeForm.getSelectedValue();
         DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
@@ -1364,6 +1385,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
+    /**
+     * Permet d'ajouter dans la table correcte de la bdd l'information saisie
+     * @param evt 
+     */
     private void jButtonAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutActionPerformed
         String ajout = this.jTextFieldAjout.getText();
         DefaultListModel Select = (DefaultListModel) jListeForm.getModel();
@@ -1422,10 +1447,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jTextFieldAjout.setText("");
     }//GEN-LAST:event_jButtonAjoutActionPerformed
 
-    private void jTextFieldAjoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAjoutActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldAjoutActionPerformed
-
+    /**
+     * Change la donnée du permis dans la bdd en intégrant son contraire.
+     * @param evt 
+     */
     private void jButtonPermisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPermisActionPerformed
         int permis;
         if (this.personne.getPermis() == 0) {
@@ -1443,6 +1468,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonPermisActionPerformed
 
+    /**
+     * Cache les autres fenêtres possiblement visible, affiche le panel de modification et affiche tous les utilisateurs en position "employé"
+     * @param evt 
+     */
     private void jMenuModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuModifActionPerformed
         this.jPanelFormation.setVisible(false);
         this.jPanelInfoPerso.setVisible(false);
@@ -1487,6 +1516,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuModifActionPerformed
 
+    /**
+     * Récupère l'employé selectionné et modifie sa position, passant en cadre ou en non cadre dans la bdd
+     * @param evt 
+     */
     private void jTablePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePositionMouseClicked
         String positionStr = String.valueOf(jTablePosition.getModel().getValueAt(jTablePosition.getSelectedRow(), 3));
         System.out.println(positionStr);
@@ -1508,10 +1541,18 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         Singleton.requeteAction("update utilisateurs set cadre = " + cadre + ", salaire = " + salaire + " where id_utilisateur = " + id);
     }//GEN-LAST:event_jTablePositionMouseClicked
 
+    /**
+     * Cache la panel de modification de position 
+     * @param evt 
+     */
     private void jButtonRetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetActionPerformed
         this.jPanelModif.setVisible(false);
     }//GEN-LAST:event_jButtonRetActionPerformed
 
+    /**
+     * Permet d'ajouter un nouvel email dans la bdd
+     * @param evt 
+     */
     private void jButtonAjoutEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjoutEmailActionPerformed
         String ajout = this.jTextFieldAjoutEmail.getText();
         DefaultListModel Select = (DefaultListModel) jListmail.getModel();
@@ -1535,7 +1576,11 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
         this.jTextFieldAjoutEmail.setText("");
     }//GEN-LAST:event_jButtonAjoutEmailActionPerformed
-
+    
+    /**
+     * Permet de supprimer dans la bdd l'email selectionné.
+     * @param evt 
+     */
     private void jButtonSuppEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSuppEmailActionPerformed
         String texte = jListmail.getSelectedValue();
         DefaultListModel Select = (DefaultListModel) jListmail.getModel();
@@ -1559,6 +1604,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSuppEmailActionPerformed
 
+    /**
+     * Cache les autres fenêtres possiblement visible, affiche le panel de promotion/retrogradation et affiche tout les employé de type "Employé" et "Responsable"
+     * @param evt 
+     */
     private void jMenuPromouvoirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPromouvoirActionPerformed
         this.jPanelFormation.setVisible(false);
         this.jPanelInfoPerso.setVisible(false);
@@ -1603,6 +1652,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuPromouvoirActionPerformed
 
+    /**
+     * Récupère l'employé selectionné et change la position, si c'est un employé, il deviendra responsable et inversement.
+     * @param evt 
+     */
     private void jTablePromouvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePromouvMouseClicked
         String positionStr = String.valueOf(jTablePromouv.getModel().getValueAt(jTablePromouv.getSelectedRow(), 3));
         System.out.println(positionStr);
@@ -1623,6 +1676,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         Singleton.requeteAction("update utilisateurs set position = " + position + ", salaire = " + salaire + " where id_utilisateur = " + id);
     }//GEN-LAST:event_jTablePromouvMouseClicked
 
+    /**
+     * Ajoute le nouvel employé dans la bdd
+     * @param evt 
+     */
     private void jButtonValiderCreationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderCreationActionPerformed
         try {
             String nom = this.jTextFieldNom1.getText();
@@ -1683,6 +1740,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonValiderCreationActionPerformed
 
+    /**
+     * Vide tout les champs de la création
+     * @param evt 
+     */
     private void jButtonAnnulerRemplissageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerRemplissageActionPerformed
         this.jTextFieldNom1.setText("");
         this.jTextFieldPrenom1.setText("");
@@ -1696,10 +1757,18 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jRadioButtonYes.setSelected(false);
     }//GEN-LAST:event_jButtonAnnulerRemplissageActionPerformed
 
+    /**
+     * Cache la panel de Création
+     * @param evt 
+     */
     private void jButtonRetour1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetour1ActionPerformed
         this.jPanelCreation.setVisible(false);
     }//GEN-LAST:event_jButtonRetour1ActionPerformed
 
+    /**
+     * Cache les autres fenêtres possiblement visible et affiche la panel de Creation
+     * @param evt 
+     */
     private void jMenuCreerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCreerActionPerformed
         this.jPanelFormation.setVisible(false);
         this.jPanelInfoPerso.setVisible(false);
@@ -1710,18 +1779,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelCreation.setOpaque(false);
     }//GEN-LAST:event_jMenuCreerActionPerformed
 
-    private void jRadioButtonYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonYesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonYesActionPerformed
-
-    private void jTextFieldAdresse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAdresse1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldAdresse1ActionPerformed
-
-    private void jTextFieldTelPro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelPro1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTelPro1ActionPerformed
-
+    /**
+     * Cache les autres fenêtres possiblement visible et affiche le panel de choix d'image et de génération CV
+     * @param evt 
+     */
     private void MenuGenererCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuGenererCVActionPerformed
         this.jPanelInfoPerso.setVisible(false);
         this.jPanelFormation.setVisible(false);
@@ -1732,6 +1793,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelImage.setOpaque(false);
     }//GEN-LAST:event_MenuGenererCVActionPerformed
 
+    /**
+     * Permet à l'utilisateur de choisir une image sur son ordinateur et de l'afficher à l'écran
+     * @param evt 
+     */
     private void jButtonChoixIimageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChoixIimageActionPerformed
         if (choixPhoto == null) {
             choixPhoto = new JFileChooser(".");
@@ -1749,6 +1814,10 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonChoixIimageActionPerformed
 
+    /**
+     * Ajoute la photo dans la bdd et génére le CV
+     * @param evt 
+     */
     private void jButtonGenerationCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerationCVActionPerformed
         if(choixPhoto!= null){
         File monImage = new File(choixPhoto.getSelectedFile().getPath());
@@ -1792,10 +1861,19 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonGenerationCVActionPerformed
 
+    /**
+     * Cache le panel de génération de CV et d'image
+     * @param evt 
+     */
     private void ButtonRetourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRetourActionPerformed
         this.jPanelImage.setVisible(false);
     }//GEN-LAST:event_ButtonRetourActionPerformed
 
+    /**
+     * Précise le nom et la position de la personne connectée, affiche dans le menu les actions auquel il a, ou non, accès selon ta position, ajoute au salaire les 3% selon ses années d'ancienneté
+     * @param leNom
+     * @param laPosition 
+     */
     public void connecte(String leNom, String laPosition) {
         //maj de l'etat de la connexion
         this.connecte = true;
@@ -1837,6 +1915,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Précise que la connexion n'est plus valable, cache dans le menu ce qui n'est plus utile et vide la liste de formation
+     */
     public void deconnecte() {
         this.connecte = false;
         this.nomjMenu.setText(null);
@@ -1853,6 +1934,9 @@ public class InterfaceGraphique extends javax.swing.JFrame {
         this.jPanelImage.setVisible(false);
     }
 
+    /**
+     * Met à jour le menu en fonction de la connexion ou deconnexion
+     */
     public void majConnexion() {
         deconnexionMenuItem.setEnabled(this.connecte);
         connexionMenuItem.setEnabled(!this.connecte);

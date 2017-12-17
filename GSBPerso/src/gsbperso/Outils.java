@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class Outils {
     /**
-     * 
+     * Passe un string en md5
      * @param mot
      * @return le md5(mot) comme en php
      */
@@ -38,6 +38,11 @@ public class Outils {
                         return mot;
     }
     
+    /**
+     * Vérifie si un string peut être un entier ou si c'est il y a des caractères
+     * @param chaine
+     * @return boolean
+     */
     public static boolean estUnEntier(String chaine) {
 		try {
 			Integer.parseInt(chaine);

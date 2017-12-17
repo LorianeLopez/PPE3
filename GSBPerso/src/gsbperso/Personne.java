@@ -23,10 +23,29 @@ public class Personne {
     private Integer permis;
     private Integer cadre;
    
+    /**
+     * Constructeur vide
+     */
     public Personne(){
         
     }
     
+    /**
+     * Constructeur avec paramètres
+     * @param id
+     * @param nom
+     * @param prenom
+     * @param adresse_rue
+     * @param adresse_CP
+     * @param adresse_ville
+     * @param salaire
+     * @param telPerso
+     * @param telPro
+     * @param site
+     * @param position
+     * @param permis
+     * @param cadre 
+     */
     public Personne(Integer id, String nom, String prenom, String adresse_rue, String adresse_CP, String adresse_ville, Float salaire, String telPerso, String telPro, String site, String position, Integer permis, Integer cadre){
         this.id = id;
         this.nom = nom;

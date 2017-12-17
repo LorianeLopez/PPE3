@@ -43,8 +43,8 @@ public class InterfaceGraphiqueTest {
     @Test
     public void testConnecte() {
         System.out.println("connecte");
-        String leNom = "";
-        String laPosition = "";
+        String leNom = "Jacques";
+        String laPosition = "0";
         InterfaceGraphique instance = new InterfaceGraphique();
         instance.connecte(leNom, laPosition);
         // TODO review the generated test code and remove the default call to fail.

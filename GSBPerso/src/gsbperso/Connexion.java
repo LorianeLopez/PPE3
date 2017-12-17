@@ -130,6 +130,10 @@ public class Connexion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Vérifie que les identifiants existent et si c'est le cas, autorise la connexion
+     * @param evt 
+     */
     private void jButtonConnecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnecterActionPerformed
         // TODO add your handling code here:
         /**

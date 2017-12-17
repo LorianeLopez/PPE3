@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Loriane
  */
-//CTRL + SHIFT + O pour générer les imports
+
 public class Singleton {
 
     private static String url = "jdbc:mysql://localhost:3333/gsbperso";
@@ -25,6 +25,10 @@ public class Singleton {
     private static Connection connect;
     private static volatile Singleton instance = null;
 
+    /**
+     * Permet d'obtenir la chaine de connexion entière
+     * @return 
+     */
     public static Connection getInstance() {
         synchronized (Singleton.class) {
             if (connect == null) {
@@ -39,6 +43,11 @@ public class Singleton {
         return connect;
     }
 
+    /**
+     * Permet d'effectuer une requête d'action de type insert into, ou update
+     * @param req
+     * @return 
+     */
     public static Integer requeteAction(String req) {
         try {
             return Singleton.getInstance().createStatement().executeUpdate(req);
@@ -49,11 +58,16 @@ public class Singleton {
         return null;
     }
 
+    /**
+     * Permet d'effectuer une requête de selection de type Select
+     * @param req
+     * @return 
+     */
     public static ResultSet requeteSelection(String req) {
         try {
             return Singleton.getInstance().createStatement().executeQuery(req);
         } catch (SQLException ex) {
-            System.out.println("Requête actionuser impossible");
+            System.out.println("Requête action impossible");
             Logger.getLogger(Singleton.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
