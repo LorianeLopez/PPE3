@@ -1907,7 +1907,7 @@ public class InterfaceGraphique extends javax.swing.JFrame {
                 Date today = new Date();
                 int difference = Integer.valueOf(dateFormat.format(today)) - calendar.get(Calendar.YEAR);
                 Float salaire = montant + (difference * (montant * 3 / 100));
-                this.personne = new Personne(lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), lignesRetournees.getString("adresse_rue"), lignesRetournees.getString("adresse_cp"), lignesRetournees.getString("adresse_ville"), salaire, lignesRetournees.getString("tel_personnel"), lignesRetournees.getString("tel_professionnel"), lignesRetournees.getString("site_web"), laPosition, lignesRetournees.getInt("permis"), lignesRetournees.getInt("cadre"));
+                this.personne = new Personne(lignesRetournees.getInt("id_utilisateur"), lignesRetournees.getString("nom"), lignesRetournees.getString("prenom"), lignesRetournees.getString("adresse_rue"), lignesRetournees.getString("adresse_cp"), lignesRetournees.getString("adresse_ville"), salaire, lignesRetournees.getString("tel_personnel"), lignesRetournees.getString("tel_professionnel"), lignesRetournees.getString("site_web"), laPosition, lignesRetournees.getInt("permis"), lignesRetournees.getInt("cadre"), difference);
             }
         } catch (SQLException ex) {
             Logger.getLogger(InterfaceGraphique.class.getName()).log(Level.SEVERE, null, ex);

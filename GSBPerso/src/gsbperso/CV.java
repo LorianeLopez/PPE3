@@ -91,7 +91,15 @@ public class CV {
                 document.add(new Paragraph("\n Permis B non acquis \n \n").setFont(font));
             }
             document.add(new Paragraph("Tel : " + laPersonne.getTelPro()+ " \n").setFont(font));
-            document.add(new Paragraph("Port : " + laPersonne.getTelPerso()+ " \n \n").setFont(font));
+            document.add(new Paragraph("Port : " + laPersonne.getTelPerso()+ " \n").setFont(font));
+            document.add(new Paragraph (laPersonne.getSite() + "\n \n").setFont(font));
+            document.add(new Paragraph (laPersonne.getAnciennete() + " ans d'ancienneté \n").setFont(font));
+            if(laPersonne.getCadre() == 1){
+                document.add(new Paragraph ("Cadre "+ laPersonne.getPosition() +" dans l'entreprise \n \n").setFont(font));
+            }else{
+                document.add(new Paragraph (laPersonne.getPosition() +" dans l'entreprise \n \n").setFont(font));
+            }
+            
             
             document.add(new Paragraph("Email : ").setFont(font2).setFontSize(14).setUnderline());
             List emails = new List()

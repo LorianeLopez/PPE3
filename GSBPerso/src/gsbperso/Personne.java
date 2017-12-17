@@ -22,6 +22,7 @@ public class Personne {
     private String position;
     private Integer permis;
     private Integer cadre;
+    private Integer anciennete;
    
     /**
      * Constructeur vide
@@ -45,8 +46,9 @@ public class Personne {
      * @param position
      * @param permis
      * @param cadre 
+     * @param ancien
      */
-    public Personne(Integer id, String nom, String prenom, String adresse_rue, String adresse_CP, String adresse_ville, Float salaire, String telPerso, String telPro, String site, String position, Integer permis, Integer cadre){
+    public Personne(Integer id, String nom, String prenom, String adresse_rue, String adresse_CP, String adresse_ville, Float salaire, String telPerso, String telPro, String site, String position, Integer permis, Integer cadre, Integer ancien){
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -60,6 +62,7 @@ public class Personne {
         this.position = position;
         this.permis = permis;
         this.cadre = cadre;
+        this.anciennete = ancien;
     }
     
     public Integer getPermis() {
@@ -165,6 +168,15 @@ public class Personne {
     public void setCadre(Integer cadre) {
         this.cadre = cadre;
     }
+
+    public Integer getAnciennete() {
+        return anciennete;
+    }
+
+    public void setAnciennete(Integer anciennete) {
+        this.anciennete = anciennete;
+    }
+    
     
     
 

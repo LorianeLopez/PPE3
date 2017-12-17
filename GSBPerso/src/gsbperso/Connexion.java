@@ -37,6 +37,7 @@ public class Connexion extends javax.swing.JDialog {
         this.setModal(true);
         //on stocke dans this.fenetre la référence vers la fenetre parente
         this.fenetre=(InterfaceGraphique)parent;
+        this.setTitle("Connexion");
     }
 
     /**
